@@ -1,0 +1,640 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions name="TopicManagementServiceService" targetNamespace="org.socraticgrid.hl7.services.eps" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:tns="org.socraticgrid.hl7.services.eps" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/">
+  <wsdl:types>
+<xs:schema xmlns:tns="org.socraticgrid.hl7.services.eps" xmlns:xs="http://www.w3.org/2001/XMLSchema" attributeFormDefault="unqualified" elementFormDefault="unqualified" targetNamespace="org.socraticgrid.hl7.services.eps">
+  <xs:element name="createAffiliation" type="tns:createAffiliation"/>
+  <xs:element name="createAffiliationResponse" type="tns:createAffiliationResponse"/>
+  <xs:element name="deleteAffiliation" type="tns:deleteAffiliation"/>
+  <xs:element name="deleteAffiliationResponse" type="tns:deleteAffiliationResponse"/>
+  <xs:element name="getAffiliationsForTopic" type="tns:getAffiliationsForTopic"/>
+  <xs:element name="getAffiliationsForTopicResponse" type="tns:getAffiliationsForTopicResponse"/>
+  <xs:element name="getAffiliationsForUser" type="tns:getAffiliationsForUser"/>
+  <xs:element name="getAffiliationsForUserResponse" type="tns:getAffiliationsForUserResponse"/>
+  <xs:element name="getPendingAccessRequests" type="tns:getPendingAccessRequests"/>
+  <xs:element name="getPendingAccessRequestsResponse" type="tns:getPendingAccessRequestsResponse"/>
+  <xs:element name="grantAccessRequest" type="tns:grantAccessRequest"/>
+  <xs:element name="grantAccessRequestResponse" type="tns:grantAccessRequestResponse"/>
+  <xs:element name="processPendingAccessRequests" type="tns:processPendingAccessRequests"/>
+  <xs:element name="processPendingAccessRequestsResponse" type="tns:processPendingAccessRequestsResponse"/>
+  <xs:element name="rejectAccessRequest" type="tns:rejectAccessRequest"/>
+  <xs:element name="rejectAccessRequestResponse" type="tns:rejectAccessRequestResponse"/>
+  <xs:element name="updateAffiliation" type="tns:updateAffiliation"/>
+  <xs:element name="updateAffiliationResponse" type="tns:updateAffiliationResponse"/>
+  <xs:complexType name="getPendingAccessRequests">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="topic" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="getPendingAccessRequestsResponse">
+    <xs:sequence>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="return" type="tns:accessRequest"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="accessRequest">
+    <xs:sequence>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="roles" nillable="true" type="tns:affiliationRole"/>
+      <xs:element minOccurs="0" name="topic" type="xs:string"/>
+      <xs:element minOccurs="0" name="userId" type="tns:user"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="user">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="defaultNotificationAddress" type="tns:notificationAddress"/>
+      <xs:element minOccurs="0" name="defaultOnDemandEndpoint" type="tns:notificationAddress"/>
+      <xs:element minOccurs="0" name="name" type="xs:string"/>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="privledges" nillable="true" type="tns:role"/>
+      <xs:element name="supportsPublishOnDemand" type="xs:boolean"/>
+      <xs:element minOccurs="0" name="userId" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="notificationAddress">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="endpoint" type="xs:string"/>
+      <xs:element minOccurs="0" name="type" type="tns:addressType"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="deleteAffiliation">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="topic" type="xs:string"/>
+      <xs:element minOccurs="0" name="userId" type="xs:string"/>
+      <xs:element minOccurs="0" name="role" type="tns:affiliationRole"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="deleteAffiliationResponse">
+    <xs:sequence>
+      <xs:element name="return" type="xs:boolean"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="grantAccessRequest">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="request" type="tns:accessRequest"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="grantAccessRequestResponse">
+    <xs:sequence>
+      <xs:element name="return" type="xs:boolean"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="getAffiliationsForTopic">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="topic" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="getAffiliationsForTopicResponse">
+    <xs:sequence>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="return" type="tns:affiliation"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="affiliation">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="affiliationRole" type="tns:affiliationRole"/>
+      <xs:element minOccurs="0" name="userId" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="updateAffiliation">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="topic" type="xs:string"/>
+      <xs:element minOccurs="0" name="userId" type="xs:string"/>
+      <xs:element minOccurs="0" name="role" type="tns:affiliationRole"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="updateAffiliationResponse">
+    <xs:sequence>
+      <xs:element name="return" type="xs:boolean"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="createAffiliation">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="topic" type="xs:string"/>
+      <xs:element minOccurs="0" name="userId" type="xs:string"/>
+      <xs:element minOccurs="0" name="role" type="tns:affiliationRole"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="createAffiliationResponse">
+    <xs:sequence>
+      <xs:element name="return" type="xs:boolean"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="processPendingAccessRequests">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="topic" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="processPendingAccessRequestsResponse">
+    <xs:sequence>
+      <xs:element name="return" type="xs:boolean"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="getAffiliationsForUser">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="userId" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="getAffiliationsForUserResponse">
+    <xs:sequence>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="return" type="tns:affiliationMapping"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="affiliationMapping">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="affiliation" type="tns:affiliation"/>
+      <xs:element minOccurs="0" name="topic" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="rejectAccessRequest">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="request" type="tns:accessRequest"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="rejectAccessRequestResponse">
+    <xs:sequence>
+      <xs:element name="return" type="xs:boolean"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:simpleType name="affiliationRole">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Publisher"/>
+      <xs:enumeration value="Subscriber"/>
+      <xs:enumeration value="Administrator"/>
+      <xs:enumeration value="Owner"/>
+      <xs:enumeration value="PublishOnly"/>
+      <xs:enumeration value="SubscribeOnly"/>
+      <xs:enumeration value="Outcast"/>
+      <xs:enumeration value="Reviewer"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="addressType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="URI"/>
+      <xs:enumeration value="XEP"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="role">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Normal"/>
+      <xs:enumeration value="Admin"/>
+      <xs:enumeration value="Restricted"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="NotAuthorizedException" type="tns:NotAuthorizedException"/>
+  <xs:complexType name="NotAuthorizedException">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="message" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="AuthenicationRequiredException" type="tns:AuthenicationRequiredException"/>
+  <xs:complexType name="AuthenicationRequiredException">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="message" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="FeatureNotAvailableException" type="tns:FeatureNotAvailableException"/>
+  <xs:complexType name="FeatureNotAvailableException">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="canonicFeatureName" type="xs:string"/>
+      <xs:element minOccurs="0" name="message" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="NoSuchTopicException" type="tns:NoSuchTopicException"/>
+  <xs:complexType name="NoSuchTopicException">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="message" type="xs:string"/>
+      <xs:element minOccurs="0" name="topic" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ConflictException" type="tns:ConflictException"/>
+  <xs:complexType name="ConflictException">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="message" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="InvalidDataException" type="tns:InvalidDataException"/>
+  <xs:complexType name="InvalidDataException">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="message" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="NoSuchItemException" type="tns:NoSuchItemException"/>
+  <xs:complexType name="NoSuchItemException">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="message" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>
+  </wsdl:types>
+  <wsdl:message name="getPendingAccessRequests">
+    <wsdl:part name="parameters" element="tns:getPendingAccessRequests">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="InvalidDataException">
+    <wsdl:part name="InvalidDataException" element="tns:InvalidDataException">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="processPendingAccessRequestsResponse">
+    <wsdl:part name="parameters" element="tns:processPendingAccessRequestsResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="updateAffiliation">
+    <wsdl:part name="parameters" element="tns:updateAffiliation">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="createAffiliation">
+    <wsdl:part name="parameters" element="tns:createAffiliation">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="rejectAccessRequest">
+    <wsdl:part name="parameters" element="tns:rejectAccessRequest">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="NotAuthorizedException">
+    <wsdl:part name="NotAuthorizedException" element="tns:NotAuthorizedException">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="createAffiliationResponse">
+    <wsdl:part name="parameters" element="tns:createAffiliationResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="rejectAccessRequestResponse">
+    <wsdl:part name="parameters" element="tns:rejectAccessRequestResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="ConflictException">
+    <wsdl:part name="ConflictException" element="tns:ConflictException">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getPendingAccessRequestsResponse">
+    <wsdl:part name="parameters" element="tns:getPendingAccessRequestsResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="deleteAffiliation">
+    <wsdl:part name="parameters" element="tns:deleteAffiliation">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="grantAccessRequest">
+    <wsdl:part name="parameters" element="tns:grantAccessRequest">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="FeatureNotAvailableException">
+    <wsdl:part name="FeatureNotAvailableException" element="tns:FeatureNotAvailableException">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="grantAccessRequestResponse">
+    <wsdl:part name="parameters" element="tns:grantAccessRequestResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getAffiliationsForUser">
+    <wsdl:part name="parameters" element="tns:getAffiliationsForUser">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="AuthenicationRequiredException">
+    <wsdl:part name="AuthenicationRequiredException" element="tns:AuthenicationRequiredException">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="updateAffiliationResponse">
+    <wsdl:part name="parameters" element="tns:updateAffiliationResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getAffiliationsForTopic">
+    <wsdl:part name="parameters" element="tns:getAffiliationsForTopic">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="NoSuchItemException">
+    <wsdl:part name="NoSuchItemException" element="tns:NoSuchItemException">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="deleteAffiliationResponse">
+    <wsdl:part name="parameters" element="tns:deleteAffiliationResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getAffiliationsForTopicResponse">
+    <wsdl:part name="parameters" element="tns:getAffiliationsForTopicResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="NoSuchTopicException">
+    <wsdl:part name="NoSuchTopicException" element="tns:NoSuchTopicException">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getAffiliationsForUserResponse">
+    <wsdl:part name="parameters" element="tns:getAffiliationsForUserResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="processPendingAccessRequests">
+    <wsdl:part name="parameters" element="tns:processPendingAccessRequests">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:portType name="topicmanagement">
+    <wsdl:operation name="getPendingAccessRequests">
+      <wsdl:input name="getPendingAccessRequests" message="tns:getPendingAccessRequests">
+    </wsdl:input>
+      <wsdl:output name="getPendingAccessRequestsResponse" message="tns:getPendingAccessRequestsResponse">
+    </wsdl:output>
+      <wsdl:fault name="FeatureNotAvailableException" message="tns:FeatureNotAvailableException">
+    </wsdl:fault>
+      <wsdl:fault name="NoSuchTopicException" message="tns:NoSuchTopicException">
+    </wsdl:fault>
+      <wsdl:fault name="AuthenicationRequiredException" message="tns:AuthenicationRequiredException">
+    </wsdl:fault>
+      <wsdl:fault name="NotAuthorizedException" message="tns:NotAuthorizedException">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="deleteAffiliation">
+      <wsdl:input name="deleteAffiliation" message="tns:deleteAffiliation">
+    </wsdl:input>
+      <wsdl:output name="deleteAffiliationResponse" message="tns:deleteAffiliationResponse">
+    </wsdl:output>
+      <wsdl:fault name="NoSuchTopicException" message="tns:NoSuchTopicException">
+    </wsdl:fault>
+      <wsdl:fault name="AuthenicationRequiredException" message="tns:AuthenicationRequiredException">
+    </wsdl:fault>
+      <wsdl:fault name="NotAuthorizedException" message="tns:NotAuthorizedException">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="grantAccessRequest">
+      <wsdl:input name="grantAccessRequest" message="tns:grantAccessRequest">
+    </wsdl:input>
+      <wsdl:output name="grantAccessRequestResponse" message="tns:grantAccessRequestResponse">
+    </wsdl:output>
+      <wsdl:fault name="FeatureNotAvailableException" message="tns:FeatureNotAvailableException">
+    </wsdl:fault>
+      <wsdl:fault name="ConflictException" message="tns:ConflictException">
+    </wsdl:fault>
+      <wsdl:fault name="AuthenicationRequiredException" message="tns:AuthenicationRequiredException">
+    </wsdl:fault>
+      <wsdl:fault name="NotAuthorizedException" message="tns:NotAuthorizedException">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getAffiliationsForTopic">
+      <wsdl:input name="getAffiliationsForTopic" message="tns:getAffiliationsForTopic">
+    </wsdl:input>
+      <wsdl:output name="getAffiliationsForTopicResponse" message="tns:getAffiliationsForTopicResponse">
+    </wsdl:output>
+      <wsdl:fault name="NoSuchTopicException" message="tns:NoSuchTopicException">
+    </wsdl:fault>
+      <wsdl:fault name="AuthenicationRequiredException" message="tns:AuthenicationRequiredException">
+    </wsdl:fault>
+      <wsdl:fault name="NotAuthorizedException" message="tns:NotAuthorizedException">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="updateAffiliation">
+      <wsdl:input name="updateAffiliation" message="tns:updateAffiliation">
+    </wsdl:input>
+      <wsdl:output name="updateAffiliationResponse" message="tns:updateAffiliationResponse">
+    </wsdl:output>
+      <wsdl:fault name="ConflictException" message="tns:ConflictException">
+    </wsdl:fault>
+      <wsdl:fault name="NoSuchTopicException" message="tns:NoSuchTopicException">
+    </wsdl:fault>
+      <wsdl:fault name="AuthenicationRequiredException" message="tns:AuthenicationRequiredException">
+    </wsdl:fault>
+      <wsdl:fault name="NotAuthorizedException" message="tns:NotAuthorizedException">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="createAffiliation">
+      <wsdl:input name="createAffiliation" message="tns:createAffiliation">
+    </wsdl:input>
+      <wsdl:output name="createAffiliationResponse" message="tns:createAffiliationResponse">
+    </wsdl:output>
+      <wsdl:fault name="NoSuchTopicException" message="tns:NoSuchTopicException">
+    </wsdl:fault>
+      <wsdl:fault name="InvalidDataException" message="tns:InvalidDataException">
+    </wsdl:fault>
+      <wsdl:fault name="AuthenicationRequiredException" message="tns:AuthenicationRequiredException">
+    </wsdl:fault>
+      <wsdl:fault name="NotAuthorizedException" message="tns:NotAuthorizedException">
+    </wsdl:fault>
+      <wsdl:fault name="NoSuchItemException" message="tns:NoSuchItemException">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="processPendingAccessRequests">
+      <wsdl:input name="processPendingAccessRequests" message="tns:processPendingAccessRequests">
+    </wsdl:input>
+      <wsdl:output name="processPendingAccessRequestsResponse" message="tns:processPendingAccessRequestsResponse">
+    </wsdl:output>
+      <wsdl:fault name="FeatureNotAvailableException" message="tns:FeatureNotAvailableException">
+    </wsdl:fault>
+      <wsdl:fault name="NoSuchTopicException" message="tns:NoSuchTopicException">
+    </wsdl:fault>
+      <wsdl:fault name="AuthenicationRequiredException" message="tns:AuthenicationRequiredException">
+    </wsdl:fault>
+      <wsdl:fault name="NotAuthorizedException" message="tns:NotAuthorizedException">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getAffiliationsForUser">
+      <wsdl:input name="getAffiliationsForUser" message="tns:getAffiliationsForUser">
+    </wsdl:input>
+      <wsdl:output name="getAffiliationsForUserResponse" message="tns:getAffiliationsForUserResponse">
+    </wsdl:output>
+      <wsdl:fault name="AuthenicationRequiredException" message="tns:AuthenicationRequiredException">
+    </wsdl:fault>
+      <wsdl:fault name="NotAuthorizedException" message="tns:NotAuthorizedException">
+    </wsdl:fault>
+      <wsdl:fault name="NoSuchItemException" message="tns:NoSuchItemException">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="rejectAccessRequest">
+      <wsdl:input name="rejectAccessRequest" message="tns:rejectAccessRequest">
+    </wsdl:input>
+      <wsdl:output name="rejectAccessRequestResponse" message="tns:rejectAccessRequestResponse">
+    </wsdl:output>
+      <wsdl:fault name="FeatureNotAvailableException" message="tns:FeatureNotAvailableException">
+    </wsdl:fault>
+      <wsdl:fault name="ConflictException" message="tns:ConflictException">
+    </wsdl:fault>
+      <wsdl:fault name="AuthenicationRequiredException" message="tns:AuthenicationRequiredException">
+    </wsdl:fault>
+      <wsdl:fault name="NotAuthorizedException" message="tns:NotAuthorizedException">
+    </wsdl:fault>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="TopicManagementServiceServiceSoapBinding" type="tns:topicmanagement">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="getPendingAccessRequests">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="getPendingAccessRequests">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="getPendingAccessRequestsResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="FeatureNotAvailableException">
+        <soap:fault name="FeatureNotAvailableException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="NoSuchTopicException">
+        <soap:fault name="NoSuchTopicException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="AuthenicationRequiredException">
+        <soap:fault name="AuthenicationRequiredException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="NotAuthorizedException">
+        <soap:fault name="NotAuthorizedException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="deleteAffiliation">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="deleteAffiliation">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="deleteAffiliationResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="NoSuchTopicException">
+        <soap:fault name="NoSuchTopicException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="AuthenicationRequiredException">
+        <soap:fault name="AuthenicationRequiredException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="NotAuthorizedException">
+        <soap:fault name="NotAuthorizedException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="grantAccessRequest">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="grantAccessRequest">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="grantAccessRequestResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="FeatureNotAvailableException">
+        <soap:fault name="FeatureNotAvailableException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="ConflictException">
+        <soap:fault name="ConflictException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="AuthenicationRequiredException">
+        <soap:fault name="AuthenicationRequiredException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="NotAuthorizedException">
+        <soap:fault name="NotAuthorizedException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getAffiliationsForTopic">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="getAffiliationsForTopic">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="getAffiliationsForTopicResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="NoSuchTopicException">
+        <soap:fault name="NoSuchTopicException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="AuthenicationRequiredException">
+        <soap:fault name="AuthenicationRequiredException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="NotAuthorizedException">
+        <soap:fault name="NotAuthorizedException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="updateAffiliation">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="updateAffiliation">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="updateAffiliationResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="ConflictException">
+        <soap:fault name="ConflictException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="NoSuchTopicException">
+        <soap:fault name="NoSuchTopicException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="AuthenicationRequiredException">
+        <soap:fault name="AuthenicationRequiredException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="NotAuthorizedException">
+        <soap:fault name="NotAuthorizedException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="createAffiliation">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="createAffiliation">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="createAffiliationResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="NoSuchTopicException">
+        <soap:fault name="NoSuchTopicException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="InvalidDataException">
+        <soap:fault name="InvalidDataException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="AuthenicationRequiredException">
+        <soap:fault name="AuthenicationRequiredException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="NotAuthorizedException">
+        <soap:fault name="NotAuthorizedException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="NoSuchItemException">
+        <soap:fault name="NoSuchItemException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="processPendingAccessRequests">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="processPendingAccessRequests">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="processPendingAccessRequestsResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="FeatureNotAvailableException">
+        <soap:fault name="FeatureNotAvailableException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="NoSuchTopicException">
+        <soap:fault name="NoSuchTopicException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="AuthenicationRequiredException">
+        <soap:fault name="AuthenicationRequiredException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="NotAuthorizedException">
+        <soap:fault name="NotAuthorizedException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getAffiliationsForUser">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="getAffiliationsForUser">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="getAffiliationsForUserResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="AuthenicationRequiredException">
+        <soap:fault name="AuthenicationRequiredException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="NotAuthorizedException">
+        <soap:fault name="NotAuthorizedException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="NoSuchItemException">
+        <soap:fault name="NoSuchItemException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="rejectAccessRequest">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="rejectAccessRequest">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="rejectAccessRequestResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="FeatureNotAvailableException">
+        <soap:fault name="FeatureNotAvailableException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="ConflictException">
+        <soap:fault name="ConflictException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="AuthenicationRequiredException">
+        <soap:fault name="AuthenicationRequiredException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="NotAuthorizedException">
+        <soap:fault name="NotAuthorizedException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="TopicManagementServiceService">
+    <wsdl:port name="topicmanagementPort" binding="tns:TopicManagementServiceServiceSoapBinding">
+      <soap:address location="http://localhost:9090/topicmanagementPort"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

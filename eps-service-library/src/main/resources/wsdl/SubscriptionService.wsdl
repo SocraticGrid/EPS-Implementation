@@ -1,0 +1,938 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions name="SubscriptionServiceService" targetNamespace="org.socraticgrid.hl7.services.eps" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:tns="org.socraticgrid.hl7.services.eps" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/">
+  <wsdl:types>
+<xs:schema xmlns:tns="org.socraticgrid.hl7.services.eps" xmlns:xs="http://www.w3.org/2001/XMLSchema" attributeFormDefault="unqualified" elementFormDefault="unqualified" targetNamespace="org.socraticgrid.hl7.services.eps">
+  <xs:element name="assertSubscriberPresence" type="tns:assertSubscriberPresence"/>
+  <xs:element name="assertSubscriberPresenceResponse" type="tns:assertSubscriberPresenceResponse"/>
+  <xs:element name="configureSubscriptionOptions" type="tns:configureSubscriptionOptions"/>
+  <xs:element name="configureSubscriptionOptionsResponse" type="tns:configureSubscriptionOptionsResponse"/>
+  <xs:element name="getDefaultSuscriptionOptions" type="tns:getDefaultSuscriptionOptions"/>
+  <xs:element name="getDefaultSuscriptionOptionsResponse" type="tns:getDefaultSuscriptionOptionsResponse"/>
+  <xs:element name="message" type="tns:message"/>
+  <xs:element name="replayEvents" type="tns:replayEvents"/>
+  <xs:element name="replayEventsResponse" type="tns:replayEventsResponse"/>
+  <xs:element name="retrieveEvent" type="tns:retrieveEvent"/>
+  <xs:element name="retrieveEventResponse" type="tns:retrieveEventResponse"/>
+  <xs:element name="retrieveEventSummaries" type="tns:retrieveEventSummaries"/>
+  <xs:element name="retrieveEventSummariesResponse" type="tns:retrieveEventSummariesResponse"/>
+  <xs:element name="retrieveEvents" type="tns:retrieveEvents"/>
+  <xs:element name="retrieveEventsResponse" type="tns:retrieveEventsResponse"/>
+  <xs:element name="subscribe" type="tns:subscribe"/>
+  <xs:element name="subscribeResponse" type="tns:subscribeResponse"/>
+  <xs:element name="unsubscribe" type="tns:unsubscribe"/>
+  <xs:element name="unsubscribeByOptions" type="tns:unsubscribeByOptions"/>
+  <xs:element name="unsubscribeByOptionsResponse" type="tns:unsubscribeByOptionsResponse"/>
+  <xs:element name="unsubscribeResponse" type="tns:unsubscribeResponse"/>
+  <xs:complexType name="assertSubscriberPresence">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="subscriberId" type="xs:string"/>
+      <xs:element minOccurs="0" name="presence" type="tns:presenceState"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="assertSubscriberPresenceResponse">
+    <xs:sequence>
+      <xs:element name="return" type="xs:boolean"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="configureSubscriptionOptions">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="topic" type="xs:string"/>
+      <xs:element minOccurs="0" name="subscriberId" type="xs:string"/>
+      <xs:element minOccurs="0" name="subscriptionId" type="xs:string"/>
+      <xs:element minOccurs="0" name="options" type="tns:options"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="options">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="access" type="tns:accessModel"/>
+      <xs:element minOccurs="0" name="durability" type="tns:durability"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="configureSubscriptionOptionsResponse">
+    <xs:sequence>
+      <xs:element name="return" type="xs:boolean"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="retrieveEventSummaries">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="topic" type="xs:string"/>
+      <xs:element minOccurs="0" name="pullRange" type="tns:pullRange"/>
+      <xs:element minOccurs="0" name="start" type="xs:dateTime"/>
+      <xs:element minOccurs="0" name="end" type="xs:dateTime"/>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="mediaForms" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="retrieveEventSummariesResponse">
+    <xs:sequence>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="return" type="tns:messageSummary"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="messageSummary">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="author" type="tns:authorship"/>
+      <xs:element minOccurs="0" name="messageCreatedTime" type="xs:dateTime"/>
+      <xs:element minOccurs="0" name="messageExpirationTime" type="xs:dateTime"/>
+      <xs:element minOccurs="0" name="messageId" type="xs:string"/>
+      <xs:element minOccurs="0" name="messagePublicationTime" type="xs:dateTime"/>
+      <xs:element name="priority" type="xs:int"/>
+      <xs:element minOccurs="0" name="publisher" type="tns:user"/>
+      <xs:element minOccurs="0" name="subject" type="xs:string"/>
+      <xs:element minOccurs="0" name="topicId" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="authorship">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="authorName" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="user">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="defaultNotificationAddress" type="tns:notificationAddress"/>
+      <xs:element minOccurs="0" name="defaultOnDemandEndpoint" type="tns:notificationAddress"/>
+      <xs:element minOccurs="0" name="name" type="xs:string"/>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="privledges" nillable="true" type="tns:role"/>
+      <xs:element name="supportsPublishOnDemand" type="xs:boolean"/>
+      <xs:element minOccurs="0" name="userId" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="notificationAddress">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="endpoint" type="xs:string"/>
+      <xs:element minOccurs="0" name="type" type="tns:addressType"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="retrieveEvents">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="topic" type="xs:string"/>
+      <xs:element minOccurs="0" name="pullRange" type="tns:pullRange"/>
+      <xs:element minOccurs="0" name="start" type="xs:dateTime"/>
+      <xs:element minOccurs="0" name="end" type="xs:dateTime"/>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="mediaForms" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="retrieveEventsResponse">
+    <xs:sequence>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="return" type="tns:message"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="message">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="header" type="tns:messageHeader"/>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="messageBodies" nillable="true" type="tns:messageBody"/>
+      <xs:element minOccurs="0" name="state" type="tns:messageState"/>
+      <xs:element minOccurs="0" name="title" type="xs:string"/>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="topics" nillable="true" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="messageHeader">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="author" type="tns:authorship"/>
+      <xs:element minOccurs="0" name="messageCreatedTime" type="xs:dateTime"/>
+      <xs:element minOccurs="0" name="messageExpirationTime" type="xs:dateTime"/>
+      <xs:element minOccurs="0" name="messageId" type="xs:string"/>
+      <xs:element minOccurs="0" name="messagePublicationTime" type="xs:dateTime"/>
+      <xs:element name="priority" type="xs:int"/>
+      <xs:element minOccurs="0" name="publisher" type="tns:user"/>
+      <xs:element minOccurs="0" name="replayId" type="xs:string"/>
+      <xs:element minOccurs="0" name="subject" type="xs:string"/>
+      <xs:element minOccurs="0" name="topicId" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="messageBody">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="body" type="xs:string"/>
+      <xs:element minOccurs="0" name="type" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="getDefaultSuscriptionOptions">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="topic" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="getDefaultSuscriptionOptionsResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="tns:options"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="replayEvents">
+    <xs:sequence>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="topics" type="xs:string"/>
+      <xs:element minOccurs="0" name="start" type="xs:dateTime"/>
+      <xs:element minOccurs="0" name="end" type="xs:dateTime"/>
+      <xs:element minOccurs="0" name="replayId" type="xs:string"/>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="mediaForms" type="xs:string"/>
+      <xs:element name="replayRate" type="xs:int"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="replayEventsResponse">
+    <xs:sequence>
+      <xs:element name="return" type="xs:boolean"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="retrieveEvent">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="topic" type="xs:string"/>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="mediaForms" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="retrieveEventResponse">
+    <xs:sequence>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="return" type="tns:message"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="subscribe">
+    <xs:sequence>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="topics" type="xs:string"/>
+      <xs:element minOccurs="0" name="type" type="tns:subscriptionType"/>
+      <xs:element minOccurs="0" name="options" type="tns:options"/>
+      <xs:element minOccurs="0" name="callbackAddress" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="subscribeResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="unsubscribe">
+    <xs:sequence>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="topics" type="xs:string"/>
+      <xs:element minOccurs="0" name="subscriberId" type="xs:string"/>
+      <xs:element minOccurs="0" name="subscriptionid" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="unsubscribeResponse">
+    <xs:sequence>
+      <xs:element name="return" type="xs:boolean"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="unsubscribeByOptions">
+    <xs:sequence>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="topics" type="xs:string"/>
+      <xs:element minOccurs="0" name="subscriberId" type="xs:string"/>
+      <xs:element minOccurs="0" name="options" type="tns:options"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="unsubscribeByOptionsResponse">
+    <xs:sequence>
+      <xs:element name="return" type="xs:boolean"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:simpleType name="presenceState">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Online"/>
+      <xs:enumeration value="Offline"/>
+      <xs:enumeration value="Indeterminate"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="accessModel">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Open"/>
+      <xs:enumeration value="Closed"/>
+      <xs:enumeration value="Authorize"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="durability">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Transient"/>
+      <xs:enumeration value="Robust"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="pullRange">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Recent"/>
+      <xs:enumeration value="Specific"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="addressType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="URI"/>
+      <xs:enumeration value="XEP"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="role">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Normal"/>
+      <xs:enumeration value="Admin"/>
+      <xs:enumeration value="Restricted"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="messageState">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Delivered"/>
+      <xs:enumeration value="Expired"/>
+      <xs:enumeration value="ReviewPending"/>
+      <xs:enumeration value="Rejected"/>
+      <xs:enumeration value="Initial"/>
+      <xs:enumeration value="Approved"/>
+      <xs:enumeration value="Deleted"/>
+      <xs:enumeration value="Pending"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="subscriptionType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Push"/>
+      <xs:enumeration value="Pull"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="NotAuthorizedException" type="tns:NotAuthorizedException"/>
+  <xs:complexType name="NotAuthorizedException">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="message" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ExpiredException" type="tns:ExpiredException"/>
+  <xs:complexType name="ExpiredException">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="message" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="AuthenicationRequiredException" type="tns:AuthenicationRequiredException"/>
+  <xs:complexType name="AuthenicationRequiredException">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="message" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ConflictException" type="tns:ConflictException"/>
+  <xs:complexType name="ConflictException">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="message" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="InvalidDataException" type="tns:InvalidDataException"/>
+  <xs:complexType name="InvalidDataException">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="message" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="NoSuchItemException" type="tns:NoSuchItemException"/>
+  <xs:complexType name="NoSuchItemException">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="message" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="FeatureNotAvailableException" type="tns:FeatureNotAvailableException"/>
+  <xs:complexType name="FeatureNotAvailableException">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="canonicFeatureName" type="xs:string"/>
+      <xs:element minOccurs="0" name="message" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="NoSuchTopicException" type="tns:NoSuchTopicException"/>
+  <xs:complexType name="NoSuchTopicException">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="message" type="xs:string"/>
+      <xs:element minOccurs="0" name="topic" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="IncompleteDataException" type="tns:IncompleteDataException"/>
+  <xs:complexType name="IncompleteDataException">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="message" type="xs:string"/>
+      <xs:element minOccurs="0" name="missingElementName" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="MediaFormatNotExceptedException" type="tns:MediaFormatNotExceptedException"/>
+  <xs:complexType name="MediaFormatNotExceptedException">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="formatId" type="xs:string"/>
+      <xs:element minOccurs="0" name="message" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>
+  </wsdl:types>
+  <wsdl:message name="InvalidDataException">
+    <wsdl:part name="InvalidDataException" element="tns:InvalidDataException">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="retrieveEventSummaries">
+    <wsdl:part name="parameters" element="tns:retrieveEventSummaries">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="unsubscribeResponse">
+    <wsdl:part name="parameters" element="tns:unsubscribeResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="replayEventsResponse">
+    <wsdl:part name="parameters" element="tns:replayEventsResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="MediaFormatNotExceptedException">
+    <wsdl:part name="MediaFormatNotExceptedException" element="tns:MediaFormatNotExceptedException">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="retrieveEventSummariesResponse">
+    <wsdl:part name="parameters" element="tns:retrieveEventSummariesResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="retrieveEventResponse">
+    <wsdl:part name="parameters" element="tns:retrieveEventResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="retrieveEvent">
+    <wsdl:part name="parameters" element="tns:retrieveEvent">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="unsubscribe">
+    <wsdl:part name="parameters" element="tns:unsubscribe">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="NotAuthorizedException">
+    <wsdl:part name="NotAuthorizedException" element="tns:NotAuthorizedException">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="assertSubscriberPresence">
+    <wsdl:part name="parameters" element="tns:assertSubscriberPresence">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="assertSubscriberPresenceResponse">
+    <wsdl:part name="parameters" element="tns:assertSubscriberPresenceResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getDefaultSuscriptionOptionsResponse">
+    <wsdl:part name="parameters" element="tns:getDefaultSuscriptionOptionsResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="retrieveEvents">
+    <wsdl:part name="parameters" element="tns:retrieveEvents">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getDefaultSuscriptionOptions">
+    <wsdl:part name="parameters" element="tns:getDefaultSuscriptionOptions">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="replayEvents">
+    <wsdl:part name="parameters" element="tns:replayEvents">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="ConflictException">
+    <wsdl:part name="ConflictException" element="tns:ConflictException">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="unsubscribeByOptionsResponse">
+    <wsdl:part name="parameters" element="tns:unsubscribeByOptionsResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="configureSubscriptionOptions">
+    <wsdl:part name="parameters" element="tns:configureSubscriptionOptions">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="configureSubscriptionOptionsResponse">
+    <wsdl:part name="parameters" element="tns:configureSubscriptionOptionsResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="ExpiredException">
+    <wsdl:part name="ExpiredException" element="tns:ExpiredException">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="FeatureNotAvailableException">
+    <wsdl:part name="FeatureNotAvailableException" element="tns:FeatureNotAvailableException">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="subscribeResponse">
+    <wsdl:part name="parameters" element="tns:subscribeResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="retrieveEventsResponse">
+    <wsdl:part name="parameters" element="tns:retrieveEventsResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="AuthenicationRequiredException">
+    <wsdl:part name="AuthenicationRequiredException" element="tns:AuthenicationRequiredException">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="NoSuchItemException">
+    <wsdl:part name="NoSuchItemException" element="tns:NoSuchItemException">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="NoSuchTopicException">
+    <wsdl:part name="NoSuchTopicException" element="tns:NoSuchTopicException">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="subscribe">
+    <wsdl:part name="parameters" element="tns:subscribe">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="IncompleteDataException">
+    <wsdl:part name="IncompleteDataException" element="tns:IncompleteDataException">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="unsubscribeByOptions">
+    <wsdl:part name="parameters" element="tns:unsubscribeByOptions">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:portType name="subscriptionService">
+    <wsdl:operation name="assertSubscriberPresence">
+      <wsdl:input name="assertSubscriberPresence" message="tns:assertSubscriberPresence">
+    </wsdl:input>
+      <wsdl:output name="assertSubscriberPresenceResponse" message="tns:assertSubscriberPresenceResponse">
+    </wsdl:output>
+      <wsdl:fault name="ExpiredException" message="tns:ExpiredException">
+    </wsdl:fault>
+      <wsdl:fault name="ConflictException" message="tns:ConflictException">
+    </wsdl:fault>
+      <wsdl:fault name="AuthenicationRequiredException" message="tns:AuthenicationRequiredException">
+    </wsdl:fault>
+      <wsdl:fault name="NotAuthorizedException" message="tns:NotAuthorizedException">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="configureSubscriptionOptions">
+      <wsdl:input name="configureSubscriptionOptions" message="tns:configureSubscriptionOptions">
+    </wsdl:input>
+      <wsdl:output name="configureSubscriptionOptionsResponse" message="tns:configureSubscriptionOptionsResponse">
+    </wsdl:output>
+      <wsdl:fault name="FeatureNotAvailableException" message="tns:FeatureNotAvailableException">
+    </wsdl:fault>
+      <wsdl:fault name="ExpiredException" message="tns:ExpiredException">
+    </wsdl:fault>
+      <wsdl:fault name="IncompleteDataException" message="tns:IncompleteDataException">
+    </wsdl:fault>
+      <wsdl:fault name="ConflictException" message="tns:ConflictException">
+    </wsdl:fault>
+      <wsdl:fault name="NoSuchTopicException" message="tns:NoSuchTopicException">
+    </wsdl:fault>
+      <wsdl:fault name="InvalidDataException" message="tns:InvalidDataException">
+    </wsdl:fault>
+      <wsdl:fault name="AuthenicationRequiredException" message="tns:AuthenicationRequiredException">
+    </wsdl:fault>
+      <wsdl:fault name="NotAuthorizedException" message="tns:NotAuthorizedException">
+    </wsdl:fault>
+      <wsdl:fault name="NoSuchItemException" message="tns:NoSuchItemException">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="retrieveEventSummaries">
+      <wsdl:input name="retrieveEventSummaries" message="tns:retrieveEventSummaries">
+    </wsdl:input>
+      <wsdl:output name="retrieveEventSummariesResponse" message="tns:retrieveEventSummariesResponse">
+    </wsdl:output>
+      <wsdl:fault name="FeatureNotAvailableException" message="tns:FeatureNotAvailableException">
+    </wsdl:fault>
+      <wsdl:fault name="ExpiredException" message="tns:ExpiredException">
+    </wsdl:fault>
+      <wsdl:fault name="NoSuchTopicException" message="tns:NoSuchTopicException">
+    </wsdl:fault>
+      <wsdl:fault name="AuthenicationRequiredException" message="tns:AuthenicationRequiredException">
+    </wsdl:fault>
+      <wsdl:fault name="NotAuthorizedException" message="tns:NotAuthorizedException">
+    </wsdl:fault>
+      <wsdl:fault name="NoSuchItemException" message="tns:NoSuchItemException">
+    </wsdl:fault>
+      <wsdl:fault name="MediaFormatNotExceptedException" message="tns:MediaFormatNotExceptedException">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="retrieveEvents">
+      <wsdl:input name="retrieveEvents" message="tns:retrieveEvents">
+    </wsdl:input>
+      <wsdl:output name="retrieveEventsResponse" message="tns:retrieveEventsResponse">
+    </wsdl:output>
+      <wsdl:fault name="FeatureNotAvailableException" message="tns:FeatureNotAvailableException">
+    </wsdl:fault>
+      <wsdl:fault name="ExpiredException" message="tns:ExpiredException">
+    </wsdl:fault>
+      <wsdl:fault name="NoSuchTopicException" message="tns:NoSuchTopicException">
+    </wsdl:fault>
+      <wsdl:fault name="AuthenicationRequiredException" message="tns:AuthenicationRequiredException">
+    </wsdl:fault>
+      <wsdl:fault name="NotAuthorizedException" message="tns:NotAuthorizedException">
+    </wsdl:fault>
+      <wsdl:fault name="NoSuchItemException" message="tns:NoSuchItemException">
+    </wsdl:fault>
+      <wsdl:fault name="MediaFormatNotExceptedException" message="tns:MediaFormatNotExceptedException">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getDefaultSuscriptionOptions">
+      <wsdl:input name="getDefaultSuscriptionOptions" message="tns:getDefaultSuscriptionOptions">
+    </wsdl:input>
+      <wsdl:output name="getDefaultSuscriptionOptionsResponse" message="tns:getDefaultSuscriptionOptionsResponse">
+    </wsdl:output>
+      <wsdl:fault name="FeatureNotAvailableException" message="tns:FeatureNotAvailableException">
+    </wsdl:fault>
+      <wsdl:fault name="NoSuchTopicException" message="tns:NoSuchTopicException">
+    </wsdl:fault>
+      <wsdl:fault name="AuthenicationRequiredException" message="tns:AuthenicationRequiredException">
+    </wsdl:fault>
+      <wsdl:fault name="NotAuthorizedException" message="tns:NotAuthorizedException">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="replayEvents">
+      <wsdl:input name="replayEvents" message="tns:replayEvents">
+    </wsdl:input>
+      <wsdl:output name="replayEventsResponse" message="tns:replayEventsResponse">
+    </wsdl:output>
+      <wsdl:fault name="FeatureNotAvailableException" message="tns:FeatureNotAvailableException">
+    </wsdl:fault>
+      <wsdl:fault name="ExpiredException" message="tns:ExpiredException">
+    </wsdl:fault>
+      <wsdl:fault name="NoSuchTopicException" message="tns:NoSuchTopicException">
+    </wsdl:fault>
+      <wsdl:fault name="InvalidDataException" message="tns:InvalidDataException">
+    </wsdl:fault>
+      <wsdl:fault name="AuthenicationRequiredException" message="tns:AuthenicationRequiredException">
+    </wsdl:fault>
+      <wsdl:fault name="NotAuthorizedException" message="tns:NotAuthorizedException">
+    </wsdl:fault>
+      <wsdl:fault name="MediaFormatNotExceptedException" message="tns:MediaFormatNotExceptedException">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="retrieveEvent">
+      <wsdl:input name="retrieveEvent" message="tns:retrieveEvent">
+    </wsdl:input>
+      <wsdl:output name="retrieveEventResponse" message="tns:retrieveEventResponse">
+    </wsdl:output>
+      <wsdl:fault name="FeatureNotAvailableException" message="tns:FeatureNotAvailableException">
+    </wsdl:fault>
+      <wsdl:fault name="ExpiredException" message="tns:ExpiredException">
+    </wsdl:fault>
+      <wsdl:fault name="NoSuchTopicException" message="tns:NoSuchTopicException">
+    </wsdl:fault>
+      <wsdl:fault name="AuthenicationRequiredException" message="tns:AuthenicationRequiredException">
+    </wsdl:fault>
+      <wsdl:fault name="NotAuthorizedException" message="tns:NotAuthorizedException">
+    </wsdl:fault>
+      <wsdl:fault name="NoSuchItemException" message="tns:NoSuchItemException">
+    </wsdl:fault>
+      <wsdl:fault name="MediaFormatNotExceptedException" message="tns:MediaFormatNotExceptedException">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="subscribe">
+      <wsdl:input name="subscribe" message="tns:subscribe">
+    </wsdl:input>
+      <wsdl:output name="subscribeResponse" message="tns:subscribeResponse">
+    </wsdl:output>
+      <wsdl:fault name="FeatureNotAvailableException" message="tns:FeatureNotAvailableException">
+    </wsdl:fault>
+      <wsdl:fault name="ExpiredException" message="tns:ExpiredException">
+    </wsdl:fault>
+      <wsdl:fault name="IncompleteDataException" message="tns:IncompleteDataException">
+    </wsdl:fault>
+      <wsdl:fault name="NoSuchTopicException" message="tns:NoSuchTopicException">
+    </wsdl:fault>
+      <wsdl:fault name="InvalidDataException" message="tns:InvalidDataException">
+    </wsdl:fault>
+      <wsdl:fault name="AuthenicationRequiredException" message="tns:AuthenicationRequiredException">
+    </wsdl:fault>
+      <wsdl:fault name="NotAuthorizedException" message="tns:NotAuthorizedException">
+    </wsdl:fault>
+      <wsdl:fault name="MediaFormatNotExceptedException" message="tns:MediaFormatNotExceptedException">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="unsubscribe">
+      <wsdl:input name="unsubscribe" message="tns:unsubscribe">
+    </wsdl:input>
+      <wsdl:output name="unsubscribeResponse" message="tns:unsubscribeResponse">
+    </wsdl:output>
+      <wsdl:fault name="NoSuchTopicException" message="tns:NoSuchTopicException">
+    </wsdl:fault>
+      <wsdl:fault name="InvalidDataException" message="tns:InvalidDataException">
+    </wsdl:fault>
+      <wsdl:fault name="AuthenicationRequiredException" message="tns:AuthenicationRequiredException">
+    </wsdl:fault>
+      <wsdl:fault name="NotAuthorizedException" message="tns:NotAuthorizedException">
+    </wsdl:fault>
+      <wsdl:fault name="NoSuchItemException" message="tns:NoSuchItemException">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="unsubscribeByOptions">
+      <wsdl:input name="unsubscribeByOptions" message="tns:unsubscribeByOptions">
+    </wsdl:input>
+      <wsdl:output name="unsubscribeByOptionsResponse" message="tns:unsubscribeByOptionsResponse">
+    </wsdl:output>
+      <wsdl:fault name="NoSuchTopicException" message="tns:NoSuchTopicException">
+    </wsdl:fault>
+      <wsdl:fault name="InvalidDataException" message="tns:InvalidDataException">
+    </wsdl:fault>
+      <wsdl:fault name="AuthenicationRequiredException" message="tns:AuthenicationRequiredException">
+    </wsdl:fault>
+      <wsdl:fault name="NotAuthorizedException" message="tns:NotAuthorizedException">
+    </wsdl:fault>
+      <wsdl:fault name="NoSuchItemException" message="tns:NoSuchItemException">
+    </wsdl:fault>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="SubscriptionServiceServiceSoapBinding" type="tns:subscriptionService">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="assertSubscriberPresence">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="assertSubscriberPresence">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="assertSubscriberPresenceResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="ExpiredException">
+        <soap:fault name="ExpiredException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="ConflictException">
+        <soap:fault name="ConflictException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="AuthenicationRequiredException">
+        <soap:fault name="AuthenicationRequiredException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="NotAuthorizedException">
+        <soap:fault name="NotAuthorizedException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="configureSubscriptionOptions">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="configureSubscriptionOptions">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="configureSubscriptionOptionsResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="FeatureNotAvailableException">
+        <soap:fault name="FeatureNotAvailableException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="ExpiredException">
+        <soap:fault name="ExpiredException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="IncompleteDataException">
+        <soap:fault name="IncompleteDataException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="ConflictException">
+        <soap:fault name="ConflictException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="NoSuchTopicException">
+        <soap:fault name="NoSuchTopicException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="InvalidDataException">
+        <soap:fault name="InvalidDataException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="AuthenicationRequiredException">
+        <soap:fault name="AuthenicationRequiredException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="NotAuthorizedException">
+        <soap:fault name="NotAuthorizedException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="NoSuchItemException">
+        <soap:fault name="NoSuchItemException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="retrieveEventSummaries">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="retrieveEventSummaries">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="retrieveEventSummariesResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="FeatureNotAvailableException">
+        <soap:fault name="FeatureNotAvailableException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="ExpiredException">
+        <soap:fault name="ExpiredException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="NoSuchTopicException">
+        <soap:fault name="NoSuchTopicException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="AuthenicationRequiredException">
+        <soap:fault name="AuthenicationRequiredException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="NotAuthorizedException">
+        <soap:fault name="NotAuthorizedException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="NoSuchItemException">
+        <soap:fault name="NoSuchItemException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="MediaFormatNotExceptedException">
+        <soap:fault name="MediaFormatNotExceptedException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="retrieveEvents">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="retrieveEvents">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="retrieveEventsResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="FeatureNotAvailableException">
+        <soap:fault name="FeatureNotAvailableException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="ExpiredException">
+        <soap:fault name="ExpiredException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="NoSuchTopicException">
+        <soap:fault name="NoSuchTopicException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="AuthenicationRequiredException">
+        <soap:fault name="AuthenicationRequiredException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="NotAuthorizedException">
+        <soap:fault name="NotAuthorizedException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="NoSuchItemException">
+        <soap:fault name="NoSuchItemException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="MediaFormatNotExceptedException">
+        <soap:fault name="MediaFormatNotExceptedException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getDefaultSuscriptionOptions">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="getDefaultSuscriptionOptions">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="getDefaultSuscriptionOptionsResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="FeatureNotAvailableException">
+        <soap:fault name="FeatureNotAvailableException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="NoSuchTopicException">
+        <soap:fault name="NoSuchTopicException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="AuthenicationRequiredException">
+        <soap:fault name="AuthenicationRequiredException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="NotAuthorizedException">
+        <soap:fault name="NotAuthorizedException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="replayEvents">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="replayEvents">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="replayEventsResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="FeatureNotAvailableException">
+        <soap:fault name="FeatureNotAvailableException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="ExpiredException">
+        <soap:fault name="ExpiredException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="NoSuchTopicException">
+        <soap:fault name="NoSuchTopicException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="InvalidDataException">
+        <soap:fault name="InvalidDataException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="AuthenicationRequiredException">
+        <soap:fault name="AuthenicationRequiredException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="NotAuthorizedException">
+        <soap:fault name="NotAuthorizedException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="MediaFormatNotExceptedException">
+        <soap:fault name="MediaFormatNotExceptedException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="retrieveEvent">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="retrieveEvent">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="retrieveEventResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="FeatureNotAvailableException">
+        <soap:fault name="FeatureNotAvailableException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="ExpiredException">
+        <soap:fault name="ExpiredException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="NoSuchTopicException">
+        <soap:fault name="NoSuchTopicException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="AuthenicationRequiredException">
+        <soap:fault name="AuthenicationRequiredException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="NotAuthorizedException">
+        <soap:fault name="NotAuthorizedException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="NoSuchItemException">
+        <soap:fault name="NoSuchItemException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="MediaFormatNotExceptedException">
+        <soap:fault name="MediaFormatNotExceptedException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="subscribe">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="subscribe">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="subscribeResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="FeatureNotAvailableException">
+        <soap:fault name="FeatureNotAvailableException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="ExpiredException">
+        <soap:fault name="ExpiredException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="IncompleteDataException">
+        <soap:fault name="IncompleteDataException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="NoSuchTopicException">
+        <soap:fault name="NoSuchTopicException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="InvalidDataException">
+        <soap:fault name="InvalidDataException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="AuthenicationRequiredException">
+        <soap:fault name="AuthenicationRequiredException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="NotAuthorizedException">
+        <soap:fault name="NotAuthorizedException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="MediaFormatNotExceptedException">
+        <soap:fault name="MediaFormatNotExceptedException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="unsubscribe">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="unsubscribe">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="unsubscribeResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="NoSuchTopicException">
+        <soap:fault name="NoSuchTopicException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="InvalidDataException">
+        <soap:fault name="InvalidDataException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="AuthenicationRequiredException">
+        <soap:fault name="AuthenicationRequiredException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="NotAuthorizedException">
+        <soap:fault name="NotAuthorizedException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="NoSuchItemException">
+        <soap:fault name="NoSuchItemException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="unsubscribeByOptions">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="unsubscribeByOptions">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="unsubscribeByOptionsResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="NoSuchTopicException">
+        <soap:fault name="NoSuchTopicException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="InvalidDataException">
+        <soap:fault name="InvalidDataException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="AuthenicationRequiredException">
+        <soap:fault name="AuthenicationRequiredException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="NotAuthorizedException">
+        <soap:fault name="NotAuthorizedException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="NoSuchItemException">
+        <soap:fault name="NoSuchItemException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="SubscriptionServiceService">
+    <wsdl:port name="subscriptionServicePort" binding="tns:SubscriptionServiceServiceSoapBinding">
+      <soap:address location="http://localhost:9090/subscriptionServicePort"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

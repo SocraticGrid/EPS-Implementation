@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions name="PSSubscriptionClientServiceService" targetNamespace="org.socraticgrid.hl7.services.eps.clients" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:tns="org.socraticgrid.hl7.services.eps.clients" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/">
+  <wsdl:types>
+<xs:schema xmlns:tns="org.socraticgrid.hl7.services.eps.clients" xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="unqualified" targetNamespace="org.socraticgrid.hl7.services.eps.clients" version="1.0">
+
+  <xs:element name="message" type="tns:message"/>
+
+  <xs:element name="topicEvent" type="tns:topicEvent"/>
+
+  <xs:element name="topicEventResponse" type="tns:topicEventResponse"/>
+
+  <xs:element name="topicManagementEvent" type="tns:topicManagementEvent"/>
+
+  <xs:element name="topicManagementEventResponse" type="tns:topicManagementEventResponse"/>
+
+  <xs:complexType name="topicManagementEvent">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="topic" type="xs:string"/>
+      <xs:element minOccurs="0" name="event" type="tns:managementEvent"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="managementEvent">
+    <xs:complexContent>
+      <xs:extension base="tns:message">
+        <xs:sequence>
+          <xs:element name="eventType" type="xs:int"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="message">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="header" type="tns:messageHeader"/>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="messageBodies" nillable="true" type="tns:messageBody"/>
+      <xs:element minOccurs="0" name="state" type="tns:messageState"/>
+      <xs:element minOccurs="0" name="title" type="xs:string"/>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="topics" nillable="true" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="messageHeader">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="author" type="tns:authorship"/>
+      <xs:element minOccurs="0" name="messageCreatedTime" type="xs:dateTime"/>
+      <xs:element minOccurs="0" name="messageExpirationTime" type="xs:dateTime"/>
+      <xs:element minOccurs="0" name="messageId" type="xs:string"/>
+      <xs:element minOccurs="0" name="messagePublicationTime" type="xs:dateTime"/>
+      <xs:element name="priority" type="xs:int"/>
+      <xs:element minOccurs="0" name="publisher" type="tns:user"/>
+      <xs:element minOccurs="0" name="replayId" type="xs:string"/>
+      <xs:element minOccurs="0" name="subject" type="xs:string"/>
+      <xs:element minOccurs="0" name="topicId" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="authorship">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="authorName" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="user">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="defaultNotificationAddress" type="tns:notificationAddress"/>
+      <xs:element minOccurs="0" name="defaultOnDemandEndpoint" type="tns:notificationAddress"/>
+      <xs:element minOccurs="0" name="name" type="xs:string"/>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="privledges" nillable="true" type="tns:role"/>
+      <xs:element name="supportsPublishOnDemand" type="xs:boolean"/>
+      <xs:element minOccurs="0" name="userId" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="notificationAddress">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="endpoint" type="xs:string"/>
+      <xs:element minOccurs="0" name="type" type="tns:addressType"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="messageBody">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="body" type="xs:string"/>
+      <xs:element minOccurs="0" name="type" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="topicManagementEventResponse">
+    <xs:sequence>
+      <xs:element name="return" type="xs:boolean"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="topicEvent">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="topic" type="xs:string"/>
+      <xs:element minOccurs="0" name="event" type="tns:message"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="topicEventResponse">
+    <xs:sequence>
+      <xs:element name="return" type="xs:boolean"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:simpleType name="addressType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="URI"/>
+      <xs:enumeration value="XEP"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="role">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Normal"/>
+      <xs:enumeration value="Admin"/>
+      <xs:enumeration value="Restricted"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="messageState">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Delivered"/>
+      <xs:enumeration value="Expired"/>
+      <xs:enumeration value="ReviewPending"/>
+      <xs:enumeration value="Rejected"/>
+      <xs:enumeration value="Initial"/>
+      <xs:enumeration value="Approved"/>
+      <xs:enumeration value="Deleted"/>
+      <xs:enumeration value="Pending"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+</xs:schema>
+  </wsdl:types>
+  <wsdl:message name="topicManagementEvent">
+    <wsdl:part name="parameters" element="tns:topicManagementEvent">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="topicEvent">
+    <wsdl:part name="parameters" element="tns:topicEvent">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="topicManagementEventResponse">
+    <wsdl:part name="parameters" element="tns:topicManagementEventResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="topicEventResponse">
+    <wsdl:part name="parameters" element="tns:topicEventResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:portType name="PSSubscriptionClient">
+    <wsdl:operation name="topicManagementEvent">
+      <wsdl:input name="topicManagementEvent" message="tns:topicManagementEvent">
+    </wsdl:input>
+      <wsdl:output name="topicManagementEventResponse" message="tns:topicManagementEventResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="topicEvent">
+      <wsdl:input name="topicEvent" message="tns:topicEvent">
+    </wsdl:input>
+      <wsdl:output name="topicEventResponse" message="tns:topicEventResponse">
+    </wsdl:output>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="PSSubscriptionClientServiceServiceSoapBinding" type="tns:PSSubscriptionClient">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="topicManagementEvent">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="topicManagementEvent">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="topicManagementEventResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="topicEvent">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="topicEvent">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="topicEventResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="PSSubscriptionClientServiceService">
+    <wsdl:port name="PSSubscriptionClientPort" binding="tns:PSSubscriptionClientServiceServiceSoapBinding">
+      <soap:address location="http://localhost:9090/PSSubscriptionClientPort"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

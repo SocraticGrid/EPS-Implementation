@@ -1,0 +1,1285 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions name="BrokerManagementServiceService" targetNamespace="org.socraticgrid.hl7.services.eps" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:tns="org.socraticgrid.hl7.services.eps" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/">
+  <wsdl:types>
+<xs:schema xmlns:tns="org.socraticgrid.hl7.services.eps" xmlns:xs="http://www.w3.org/2001/XMLSchema" attributeFormDefault="unqualified" elementFormDefault="unqualified" targetNamespace="org.socraticgrid.hl7.services.eps">
+  <xs:element name="configureTopic" type="tns:configureTopic"/>
+  <xs:element name="configureTopicResponse" type="tns:configureTopicResponse"/>
+  <xs:element name="createTopic" type="tns:createTopic"/>
+  <xs:element name="createTopicResponse" type="tns:createTopicResponse"/>
+  <xs:element name="createUser" type="tns:createUser"/>
+  <xs:element name="createUserResponse" type="tns:createUserResponse"/>
+  <xs:element name="deleteTopic" type="tns:deleteTopic"/>
+  <xs:element name="deleteTopicResponse" type="tns:deleteTopicResponse"/>
+  <xs:element name="deleteUser" type="tns:deleteUser"/>
+  <xs:element name="deleteUserResponse" type="tns:deleteUserResponse"/>
+  <xs:element name="discoverUser" type="tns:discoverUser"/>
+  <xs:element name="discoverUserResponse" type="tns:discoverUserResponse"/>
+  <xs:element name="getBrokerAccessRequests" type="tns:getBrokerAccessRequests"/>
+  <xs:element name="getBrokerAccessRequestsResponse" type="tns:getBrokerAccessRequestsResponse"/>
+  <xs:element name="getPublishersForTopic" type="tns:getPublishersForTopic"/>
+  <xs:element name="getPublishersForTopicResponse" type="tns:getPublishersForTopicResponse"/>
+  <xs:element name="getSubscriptionsForTopic" type="tns:getSubscriptionsForTopic"/>
+  <xs:element name="getSubscriptionsForTopicResponse" type="tns:getSubscriptionsForTopicResponse"/>
+  <xs:element name="getTopicMetadata" type="tns:getTopicMetadata"/>
+  <xs:element name="getTopicMetadataResponse" type="tns:getTopicMetadataResponse"/>
+  <xs:element name="getUser" type="tns:getUser"/>
+  <xs:element name="getUserResponse" type="tns:getUserResponse"/>
+  <xs:element name="grantBrokerAccessRequest" type="tns:grantBrokerAccessRequest"/>
+  <xs:element name="grantBrokerAccessRequestResponse" type="tns:grantBrokerAccessRequestResponse"/>
+  <xs:element name="message" type="tns:message"/>
+  <xs:element name="moveTopic" type="tns:moveTopic"/>
+  <xs:element name="moveTopicResponse" type="tns:moveTopicResponse"/>
+  <xs:element name="purgeAllTopicEvents" type="tns:purgeAllTopicEvents"/>
+  <xs:element name="purgeAllTopicEventsResponse" type="tns:purgeAllTopicEventsResponse"/>
+  <xs:element name="rejectBrokerAccessRequest" type="tns:rejectBrokerAccessRequest"/>
+  <xs:element name="rejectBrokerAccessRequestResponse" type="tns:rejectBrokerAccessRequestResponse"/>
+  <xs:element name="updateUser" type="tns:updateUser"/>
+  <xs:element name="updateUserResponse" type="tns:updateUserResponse"/>
+  <xs:complexType name="createUser">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="userInfo" type="tns:user"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="user">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="defaultNotificationAddress" type="tns:notificationAddress"/>
+      <xs:element minOccurs="0" name="defaultOnDemandEndpoint" type="tns:notificationAddress"/>
+      <xs:element minOccurs="0" name="name" type="xs:string"/>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="privledges" nillable="true" type="tns:role"/>
+      <xs:element name="supportsPublishOnDemand" type="xs:boolean"/>
+      <xs:element minOccurs="0" name="userId" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="notificationAddress">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="endpoint" type="xs:string"/>
+      <xs:element minOccurs="0" name="type" type="tns:addressType"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="createUserResponse">
+    <xs:sequence>
+      <xs:element name="return" type="xs:boolean"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="getTopicMetadata">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="topic" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="getTopicMetadataResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="tns:topicMetadata"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="topicMetadata">
+    <xs:sequence>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="channels" nillable="true" type="tns:channel"/>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="options" nillable="true" type="tns:options"/>
+      <xs:element minOccurs="0" name="owner" type="tns:user"/>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="publishers" nillable="true" type="tns:user"/>
+      <xs:element minOccurs="0" name="topicId" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="channel">
+    <xs:sequence>
+      <xs:element name="durability" type="xs:int"/>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="messageQueueList" nillable="true" type="tns:message"/>
+      <xs:element name="priority" type="xs:int"/>
+      <xs:element name="sequencing" type="xs:int"/>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="subscribersSet" nillable="true" type="tns:user"/>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="subscriptionsList" nillable="true" type="tns:subscription"/>
+      <xs:element minOccurs="0" name="topic" type="tns:topic"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="message">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="header" type="tns:messageHeader"/>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="messageBodies" nillable="true" type="tns:messageBody"/>
+      <xs:element minOccurs="0" name="state" type="tns:messageState"/>
+      <xs:element minOccurs="0" name="title" type="xs:string"/>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="topics" nillable="true" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="messageHeader">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="author" type="tns:authorship"/>
+      <xs:element minOccurs="0" name="messageCreatedTime" type="xs:dateTime"/>
+      <xs:element minOccurs="0" name="messageExpirationTime" type="xs:dateTime"/>
+      <xs:element minOccurs="0" name="messageId" type="xs:string"/>
+      <xs:element minOccurs="0" name="messagePublicationTime" type="xs:dateTime"/>
+      <xs:element name="priority" type="xs:int"/>
+      <xs:element minOccurs="0" name="publisher" type="tns:user"/>
+      <xs:element minOccurs="0" name="replayId" type="xs:string"/>
+      <xs:element minOccurs="0" name="subject" type="xs:string"/>
+      <xs:element minOccurs="0" name="topicId" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="authorship">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="authorName" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="messageBody">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="body" type="xs:string"/>
+      <xs:element minOccurs="0" name="type" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="subscription">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="channel" type="tns:channel"/>
+      <xs:element minOccurs="0" name="contractType" type="tns:contractType"/>
+      <xs:element minOccurs="0" name="durability" type="tns:durability"/>
+      <xs:element minOccurs="0" name="id" type="xs:string"/>
+      <xs:element minOccurs="0" name="lastMessage" type="xs:string"/>
+      <xs:element name="requireId" type="xs:boolean"/>
+      <xs:element minOccurs="0" name="subscriber" type="tns:user"/>
+      <xs:element minOccurs="0" name="subscriberNotificationAddress" type="tns:notificationAddress"/>
+      <xs:element minOccurs="0" name="type" type="tns:subscriptionType"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="topic">
+    <xs:sequence>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="affiliationsList" nillable="true" type="tns:affiliation"/>
+      <xs:element minOccurs="0" name="channelsList" type="tns:channel"/>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="deliveryReviewersList" nillable="true" type="xs:string"/>
+      <xs:element minOccurs="0" name="description" type="xs:string"/>
+      <xs:element minOccurs="0" name="name" type="xs:string"/>
+      <xs:element minOccurs="0" name="optionsList" type="tns:options"/>
+      <xs:element minOccurs="0" name="parent" type="tns:topic"/>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="publicationReviewersList" nillable="true" type="xs:string"/>
+      <xs:element minOccurs="0" name="publishersList" type="xs:string"/>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="subscriptionsList" nillable="true" type="tns:subscription"/>
+      <xs:element name="subtopics">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element maxOccurs="unbounded" minOccurs="0" name="entry">
+              <xs:complexType>
+                <xs:sequence>
+                  <xs:element minOccurs="0" name="key" type="xs:string"/>
+                  <xs:element minOccurs="0" name="value" type="tns:topic"/>
+                </xs:sequence>
+              </xs:complexType>
+            </xs:element>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element minOccurs="0" name="topicId" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="affiliation">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="affiliationRole" type="tns:affiliationRole"/>
+      <xs:element minOccurs="0" name="userId" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="options">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="access" type="tns:accessModel"/>
+      <xs:element minOccurs="0" name="durability" type="tns:durability"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="deleteUser">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="userId" type="xs:string"/>
+      <xs:element minOccurs="0" name="topic" type="tns:removeContentScope"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="deleteUserResponse">
+    <xs:sequence>
+      <xs:element name="return" type="xs:boolean"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="purgeAllTopicEvents">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="topic" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="purgeAllTopicEventsResponse">
+    <xs:sequence>
+      <xs:element name="return" type="xs:boolean"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="getSubscriptionsForTopic">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="topic" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="getSubscriptionsForTopicResponse">
+    <xs:sequence>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="return" type="tns:subscription"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="rejectBrokerAccessRequest">
+    <xs:sequence>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="requests" type="tns:brokerAccessRequest"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="brokerAccessRequest">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="userInfo" type="tns:user"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="rejectBrokerAccessRequestResponse">
+    <xs:sequence>
+      <xs:element name="return" type="xs:boolean"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="getPublishersForTopic">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="topic" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="getPublishersForTopicResponse">
+    <xs:sequence>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="return" type="tns:publicationContract"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="publicationContract">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="onDemandEndpoint" type="xs:string"/>
+      <xs:element minOccurs="0" name="publisher" type="tns:user"/>
+      <xs:element name="supportsPublishOnDemand" type="xs:boolean"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="updateUser">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="topic" type="xs:string"/>
+      <xs:element minOccurs="0" name="options" type="tns:options"/>
+      <xs:element minOccurs="0" name="userData" type="tns:user"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="updateUserResponse">
+    <xs:sequence/>
+  </xs:complexType>
+  <xs:complexType name="moveTopic">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="sourceTopic" type="xs:string"/>
+      <xs:element minOccurs="0" name="destinationPath" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="moveTopicResponse">
+    <xs:sequence/>
+  </xs:complexType>
+  <xs:complexType name="deleteTopic">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="topic" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="deleteTopicResponse">
+    <xs:sequence>
+      <xs:element name="return" type="xs:boolean"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="grantBrokerAccessRequest">
+    <xs:sequence>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="request" type="tns:brokerAccessRequest"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="grantBrokerAccessRequestResponse">
+    <xs:sequence>
+      <xs:element name="return" type="xs:boolean"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="configureTopic">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="topic" type="xs:string"/>
+      <xs:element minOccurs="0" name="topicOptions" type="tns:topic"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="configureTopicResponse">
+    <xs:sequence>
+      <xs:element name="return" type="xs:boolean"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="getBrokerAccessRequests">
+    <xs:sequence/>
+  </xs:complexType>
+  <xs:complexType name="getBrokerAccessRequestsResponse">
+    <xs:sequence>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="return" type="tns:brokerAccessRequest"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="getUser">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="userId" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="getUserResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="tns:user"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="discoverUser">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="query" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="discoverUserResponse">
+    <xs:sequence>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="return" type="tns:user"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="createTopic">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="parentTopic" type="xs:string"/>
+      <xs:element minOccurs="0" name="topicName" type="xs:string"/>
+      <xs:element minOccurs="0" name="topicOptions" type="tns:topic"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="createTopicResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="tns:creationResult"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:simpleType name="addressType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="URI"/>
+      <xs:enumeration value="XEP"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="role">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Normal"/>
+      <xs:enumeration value="Admin"/>
+      <xs:enumeration value="Restricted"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="messageState">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Delivered"/>
+      <xs:enumeration value="Expired"/>
+      <xs:enumeration value="ReviewPending"/>
+      <xs:enumeration value="Rejected"/>
+      <xs:enumeration value="Initial"/>
+      <xs:enumeration value="Approved"/>
+      <xs:enumeration value="Deleted"/>
+      <xs:enumeration value="Pending"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="contractType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Push"/>
+      <xs:enumeration value="Pull"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="durability">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Transient"/>
+      <xs:enumeration value="Robust"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="subscriptionType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Push"/>
+      <xs:enumeration value="Pull"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="affiliationRole">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Publisher"/>
+      <xs:enumeration value="Subscriber"/>
+      <xs:enumeration value="Administrator"/>
+      <xs:enumeration value="Owner"/>
+      <xs:enumeration value="PublishOnly"/>
+      <xs:enumeration value="SubscribeOnly"/>
+      <xs:enumeration value="Outcast"/>
+      <xs:enumeration value="Reviewer"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="accessModel">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Open"/>
+      <xs:enumeration value="Closed"/>
+      <xs:enumeration value="Authorize"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="removeContentScope">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Yes"/>
+      <xs:enumeration value="No"/>
+      <xs:enumeration value="Override"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="creationResult">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Success"/>
+      <xs:enumeration value="Failure"/>
+      <xs:enumeration value="Deferred"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="NotAuthorizedException" type="tns:NotAuthorizedException"/>
+  <xs:complexType name="NotAuthorizedException">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="message" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="AuthenicationRequiredException" type="tns:AuthenicationRequiredException"/>
+  <xs:complexType name="AuthenicationRequiredException">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="message" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="InvalidDataException" type="tns:InvalidDataException"/>
+  <xs:complexType name="InvalidDataException">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="message" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ConflictException" type="tns:ConflictException"/>
+  <xs:complexType name="ConflictException">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="message" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="IncompleteDataException" type="tns:IncompleteDataException"/>
+  <xs:complexType name="IncompleteDataException">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="message" type="xs:string"/>
+      <xs:element minOccurs="0" name="missingElementName" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ExpiredException" type="tns:ExpiredException"/>
+  <xs:complexType name="ExpiredException">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="message" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="NoSuchTopicException" type="tns:NoSuchTopicException"/>
+  <xs:complexType name="NoSuchTopicException">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="message" type="xs:string"/>
+      <xs:element minOccurs="0" name="topic" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="NoSuchItemException" type="tns:NoSuchItemException"/>
+  <xs:complexType name="NoSuchItemException">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="message" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="FeatureNotAvailableException" type="tns:FeatureNotAvailableException"/>
+  <xs:complexType name="FeatureNotAvailableException">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="canonicFeatureName" type="xs:string"/>
+      <xs:element minOccurs="0" name="message" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="MediaFormatNotExceptedException" type="tns:MediaFormatNotExceptedException"/>
+  <xs:complexType name="MediaFormatNotExceptedException">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="formatId" type="xs:string"/>
+      <xs:element minOccurs="0" name="message" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>
+  </wsdl:types>
+  <wsdl:message name="rejectBrokerAccessRequestResponse">
+    <wsdl:part name="parameters" element="tns:rejectBrokerAccessRequestResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="InvalidDataException">
+    <wsdl:part name="InvalidDataException" element="tns:InvalidDataException">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="purgeAllTopicEvents">
+    <wsdl:part name="parameters" element="tns:purgeAllTopicEvents">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="deleteTopicResponse">
+    <wsdl:part name="parameters" element="tns:deleteTopicResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="MediaFormatNotExceptedException">
+    <wsdl:part name="MediaFormatNotExceptedException" element="tns:MediaFormatNotExceptedException">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="rejectBrokerAccessRequest">
+    <wsdl:part name="parameters" element="tns:rejectBrokerAccessRequest">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="updateUserResponse">
+    <wsdl:part name="parameters" element="tns:updateUserResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getPublishersForTopic">
+    <wsdl:part name="parameters" element="tns:getPublishersForTopic">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="NotAuthorizedException">
+    <wsdl:part name="NotAuthorizedException" element="tns:NotAuthorizedException">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getTopicMetadataResponse">
+    <wsdl:part name="parameters" element="tns:getTopicMetadataResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="moveTopicResponse">
+    <wsdl:part name="parameters" element="tns:moveTopicResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="moveTopic">
+    <wsdl:part name="parameters" element="tns:moveTopic">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getBrokerAccessRequestsResponse">
+    <wsdl:part name="parameters" element="tns:getBrokerAccessRequestsResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="deleteTopic">
+    <wsdl:part name="parameters" element="tns:deleteTopic">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getUserResponse">
+    <wsdl:part name="parameters" element="tns:getUserResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getBrokerAccessRequests">
+    <wsdl:part name="parameters" element="tns:getBrokerAccessRequests">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getUser">
+    <wsdl:part name="parameters" element="tns:getUser">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="ConflictException">
+    <wsdl:part name="ConflictException" element="tns:ConflictException">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getSubscriptionsForTopicResponse">
+    <wsdl:part name="parameters" element="tns:getSubscriptionsForTopicResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="createUser">
+    <wsdl:part name="parameters" element="tns:createUser">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getTopicMetadata">
+    <wsdl:part name="parameters" element="tns:getTopicMetadata">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="deleteUser">
+    <wsdl:part name="parameters" element="tns:deleteUser">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getPublishersForTopicResponse">
+    <wsdl:part name="parameters" element="tns:getPublishersForTopicResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="createTopicResponse">
+    <wsdl:part name="parameters" element="tns:createTopicResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="deleteUserResponse">
+    <wsdl:part name="parameters" element="tns:deleteUserResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="discoverUserResponse">
+    <wsdl:part name="parameters" element="tns:discoverUserResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getSubscriptionsForTopic">
+    <wsdl:part name="parameters" element="tns:getSubscriptionsForTopic">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="ExpiredException">
+    <wsdl:part name="ExpiredException" element="tns:ExpiredException">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="FeatureNotAvailableException">
+    <wsdl:part name="FeatureNotAvailableException" element="tns:FeatureNotAvailableException">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="configureTopicResponse">
+    <wsdl:part name="parameters" element="tns:configureTopicResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="purgeAllTopicEventsResponse">
+    <wsdl:part name="parameters" element="tns:purgeAllTopicEventsResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="AuthenicationRequiredException">
+    <wsdl:part name="AuthenicationRequiredException" element="tns:AuthenicationRequiredException">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="updateUser">
+    <wsdl:part name="parameters" element="tns:updateUser">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="grantBrokerAccessRequestResponse">
+    <wsdl:part name="parameters" element="tns:grantBrokerAccessRequestResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="NoSuchItemException">
+    <wsdl:part name="NoSuchItemException" element="tns:NoSuchItemException">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="grantBrokerAccessRequest">
+    <wsdl:part name="parameters" element="tns:grantBrokerAccessRequest">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="configureTopic">
+    <wsdl:part name="parameters" element="tns:configureTopic">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="NoSuchTopicException">
+    <wsdl:part name="NoSuchTopicException" element="tns:NoSuchTopicException">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="createUserResponse">
+    <wsdl:part name="parameters" element="tns:createUserResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="IncompleteDataException">
+    <wsdl:part name="IncompleteDataException" element="tns:IncompleteDataException">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="discoverUser">
+    <wsdl:part name="parameters" element="tns:discoverUser">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="createTopic">
+    <wsdl:part name="parameters" element="tns:createTopic">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:portType name="brokermanagement">
+    <wsdl:operation name="createUser">
+      <wsdl:input name="createUser" message="tns:createUser">
+    </wsdl:input>
+      <wsdl:output name="createUserResponse" message="tns:createUserResponse">
+    </wsdl:output>
+      <wsdl:fault name="IncompleteDataException" message="tns:IncompleteDataException">
+    </wsdl:fault>
+      <wsdl:fault name="ConflictException" message="tns:ConflictException">
+    </wsdl:fault>
+      <wsdl:fault name="InvalidDataException" message="tns:InvalidDataException">
+    </wsdl:fault>
+      <wsdl:fault name="AuthenicationRequiredException" message="tns:AuthenicationRequiredException">
+    </wsdl:fault>
+      <wsdl:fault name="NotAuthorizedException" message="tns:NotAuthorizedException">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getTopicMetadata">
+      <wsdl:input name="getTopicMetadata" message="tns:getTopicMetadata">
+    </wsdl:input>
+      <wsdl:output name="getTopicMetadataResponse" message="tns:getTopicMetadataResponse">
+    </wsdl:output>
+      <wsdl:fault name="ExpiredException" message="tns:ExpiredException">
+    </wsdl:fault>
+      <wsdl:fault name="NoSuchTopicException" message="tns:NoSuchTopicException">
+    </wsdl:fault>
+      <wsdl:fault name="AuthenicationRequiredException" message="tns:AuthenicationRequiredException">
+    </wsdl:fault>
+      <wsdl:fault name="NotAuthorizedException" message="tns:NotAuthorizedException">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="deleteUser">
+      <wsdl:input name="deleteUser" message="tns:deleteUser">
+    </wsdl:input>
+      <wsdl:output name="deleteUserResponse" message="tns:deleteUserResponse">
+    </wsdl:output>
+      <wsdl:fault name="AuthenicationRequiredException" message="tns:AuthenicationRequiredException">
+    </wsdl:fault>
+      <wsdl:fault name="NotAuthorizedException" message="tns:NotAuthorizedException">
+    </wsdl:fault>
+      <wsdl:fault name="NoSuchItemException" message="tns:NoSuchItemException">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="purgeAllTopicEvents">
+      <wsdl:input name="purgeAllTopicEvents" message="tns:purgeAllTopicEvents">
+    </wsdl:input>
+      <wsdl:output name="purgeAllTopicEventsResponse" message="tns:purgeAllTopicEventsResponse">
+    </wsdl:output>
+      <wsdl:fault name="NoSuchTopicException" message="tns:NoSuchTopicException">
+    </wsdl:fault>
+      <wsdl:fault name="AuthenicationRequiredException" message="tns:AuthenicationRequiredException">
+    </wsdl:fault>
+      <wsdl:fault name="NotAuthorizedException" message="tns:NotAuthorizedException">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getSubscriptionsForTopic">
+      <wsdl:input name="getSubscriptionsForTopic" message="tns:getSubscriptionsForTopic">
+    </wsdl:input>
+      <wsdl:output name="getSubscriptionsForTopicResponse" message="tns:getSubscriptionsForTopicResponse">
+    </wsdl:output>
+      <wsdl:fault name="ExpiredException" message="tns:ExpiredException">
+    </wsdl:fault>
+      <wsdl:fault name="NoSuchTopicException" message="tns:NoSuchTopicException">
+    </wsdl:fault>
+      <wsdl:fault name="AuthenicationRequiredException" message="tns:AuthenicationRequiredException">
+    </wsdl:fault>
+      <wsdl:fault name="NotAuthorizedException" message="tns:NotAuthorizedException">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="rejectBrokerAccessRequest">
+      <wsdl:input name="rejectBrokerAccessRequest" message="tns:rejectBrokerAccessRequest">
+    </wsdl:input>
+      <wsdl:output name="rejectBrokerAccessRequestResponse" message="tns:rejectBrokerAccessRequestResponse">
+    </wsdl:output>
+      <wsdl:fault name="FeatureNotAvailableException" message="tns:FeatureNotAvailableException">
+    </wsdl:fault>
+      <wsdl:fault name="IncompleteDataException" message="tns:IncompleteDataException">
+    </wsdl:fault>
+      <wsdl:fault name="InvalidDataException" message="tns:InvalidDataException">
+    </wsdl:fault>
+      <wsdl:fault name="AuthenicationRequiredException" message="tns:AuthenicationRequiredException">
+    </wsdl:fault>
+      <wsdl:fault name="NotAuthorizedException" message="tns:NotAuthorizedException">
+    </wsdl:fault>
+      <wsdl:fault name="NoSuchItemException" message="tns:NoSuchItemException">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getPublishersForTopic">
+      <wsdl:input name="getPublishersForTopic" message="tns:getPublishersForTopic">
+    </wsdl:input>
+      <wsdl:output name="getPublishersForTopicResponse" message="tns:getPublishersForTopicResponse">
+    </wsdl:output>
+      <wsdl:fault name="ExpiredException" message="tns:ExpiredException">
+    </wsdl:fault>
+      <wsdl:fault name="NoSuchTopicException" message="tns:NoSuchTopicException">
+    </wsdl:fault>
+      <wsdl:fault name="AuthenicationRequiredException" message="tns:AuthenicationRequiredException">
+    </wsdl:fault>
+      <wsdl:fault name="NotAuthorizedException" message="tns:NotAuthorizedException">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="updateUser">
+      <wsdl:input name="updateUser" message="tns:updateUser">
+    </wsdl:input>
+      <wsdl:output name="updateUserResponse" message="tns:updateUserResponse">
+    </wsdl:output>
+      <wsdl:fault name="IncompleteDataException" message="tns:IncompleteDataException">
+    </wsdl:fault>
+      <wsdl:fault name="InvalidDataException" message="tns:InvalidDataException">
+    </wsdl:fault>
+      <wsdl:fault name="AuthenicationRequiredException" message="tns:AuthenicationRequiredException">
+    </wsdl:fault>
+      <wsdl:fault name="NotAuthorizedException" message="tns:NotAuthorizedException">
+    </wsdl:fault>
+      <wsdl:fault name="NoSuchItemException" message="tns:NoSuchItemException">
+    </wsdl:fault>
+      <wsdl:fault name="MediaFormatNotExceptedException" message="tns:MediaFormatNotExceptedException">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="moveTopic">
+      <wsdl:input name="moveTopic" message="tns:moveTopic">
+    </wsdl:input>
+      <wsdl:output name="moveTopicResponse" message="tns:moveTopicResponse">
+    </wsdl:output>
+      <wsdl:fault name="ConflictException" message="tns:ConflictException">
+    </wsdl:fault>
+      <wsdl:fault name="NoSuchTopicException" message="tns:NoSuchTopicException">
+    </wsdl:fault>
+      <wsdl:fault name="AuthenicationRequiredException" message="tns:AuthenicationRequiredException">
+    </wsdl:fault>
+      <wsdl:fault name="NotAuthorizedException" message="tns:NotAuthorizedException">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="deleteTopic">
+      <wsdl:input name="deleteTopic" message="tns:deleteTopic">
+    </wsdl:input>
+      <wsdl:output name="deleteTopicResponse" message="tns:deleteTopicResponse">
+    </wsdl:output>
+      <wsdl:fault name="ConflictException" message="tns:ConflictException">
+    </wsdl:fault>
+      <wsdl:fault name="NoSuchTopicException" message="tns:NoSuchTopicException">
+    </wsdl:fault>
+      <wsdl:fault name="AuthenicationRequiredException" message="tns:AuthenicationRequiredException">
+    </wsdl:fault>
+      <wsdl:fault name="NotAuthorizedException" message="tns:NotAuthorizedException">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="grantBrokerAccessRequest">
+      <wsdl:input name="grantBrokerAccessRequest" message="tns:grantBrokerAccessRequest">
+    </wsdl:input>
+      <wsdl:output name="grantBrokerAccessRequestResponse" message="tns:grantBrokerAccessRequestResponse">
+    </wsdl:output>
+      <wsdl:fault name="FeatureNotAvailableException" message="tns:FeatureNotAvailableException">
+    </wsdl:fault>
+      <wsdl:fault name="IncompleteDataException" message="tns:IncompleteDataException">
+    </wsdl:fault>
+      <wsdl:fault name="InvalidDataException" message="tns:InvalidDataException">
+    </wsdl:fault>
+      <wsdl:fault name="AuthenicationRequiredException" message="tns:AuthenicationRequiredException">
+    </wsdl:fault>
+      <wsdl:fault name="NotAuthorizedException" message="tns:NotAuthorizedException">
+    </wsdl:fault>
+      <wsdl:fault name="NoSuchItemException" message="tns:NoSuchItemException">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="configureTopic">
+      <wsdl:input name="configureTopic" message="tns:configureTopic">
+    </wsdl:input>
+      <wsdl:output name="configureTopicResponse" message="tns:configureTopicResponse">
+    </wsdl:output>
+      <wsdl:fault name="FeatureNotAvailableException" message="tns:FeatureNotAvailableException">
+    </wsdl:fault>
+      <wsdl:fault name="ExpiredException" message="tns:ExpiredException">
+    </wsdl:fault>
+      <wsdl:fault name="IncompleteDataException" message="tns:IncompleteDataException">
+    </wsdl:fault>
+      <wsdl:fault name="ConflictException" message="tns:ConflictException">
+    </wsdl:fault>
+      <wsdl:fault name="NoSuchTopicException" message="tns:NoSuchTopicException">
+    </wsdl:fault>
+      <wsdl:fault name="InvalidDataException" message="tns:InvalidDataException">
+    </wsdl:fault>
+      <wsdl:fault name="AuthenicationRequiredException" message="tns:AuthenicationRequiredException">
+    </wsdl:fault>
+      <wsdl:fault name="NotAuthorizedException" message="tns:NotAuthorizedException">
+    </wsdl:fault>
+      <wsdl:fault name="MediaFormatNotExceptedException" message="tns:MediaFormatNotExceptedException">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getBrokerAccessRequests">
+      <wsdl:input name="getBrokerAccessRequests" message="tns:getBrokerAccessRequests">
+    </wsdl:input>
+      <wsdl:output name="getBrokerAccessRequestsResponse" message="tns:getBrokerAccessRequestsResponse">
+    </wsdl:output>
+      <wsdl:fault name="FeatureNotAvailableException" message="tns:FeatureNotAvailableException">
+    </wsdl:fault>
+      <wsdl:fault name="AuthenicationRequiredException" message="tns:AuthenicationRequiredException">
+    </wsdl:fault>
+      <wsdl:fault name="NotAuthorizedException" message="tns:NotAuthorizedException">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getUser">
+      <wsdl:input name="getUser" message="tns:getUser">
+    </wsdl:input>
+      <wsdl:output name="getUserResponse" message="tns:getUserResponse">
+    </wsdl:output>
+      <wsdl:fault name="InvalidDataException" message="tns:InvalidDataException">
+    </wsdl:fault>
+      <wsdl:fault name="AuthenicationRequiredException" message="tns:AuthenicationRequiredException">
+    </wsdl:fault>
+      <wsdl:fault name="NotAuthorizedException" message="tns:NotAuthorizedException">
+    </wsdl:fault>
+      <wsdl:fault name="NoSuchItemException" message="tns:NoSuchItemException">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="discoverUser">
+      <wsdl:input name="discoverUser" message="tns:discoverUser">
+    </wsdl:input>
+      <wsdl:output name="discoverUserResponse" message="tns:discoverUserResponse">
+    </wsdl:output>
+      <wsdl:fault name="InvalidDataException" message="tns:InvalidDataException">
+    </wsdl:fault>
+      <wsdl:fault name="AuthenicationRequiredException" message="tns:AuthenicationRequiredException">
+    </wsdl:fault>
+      <wsdl:fault name="NotAuthorizedException" message="tns:NotAuthorizedException">
+    </wsdl:fault>
+      <wsdl:fault name="NoSuchItemException" message="tns:NoSuchItemException">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="createTopic">
+      <wsdl:input name="createTopic" message="tns:createTopic">
+    </wsdl:input>
+      <wsdl:output name="createTopicResponse" message="tns:createTopicResponse">
+    </wsdl:output>
+      <wsdl:fault name="FeatureNotAvailableException" message="tns:FeatureNotAvailableException">
+    </wsdl:fault>
+      <wsdl:fault name="ExpiredException" message="tns:ExpiredException">
+    </wsdl:fault>
+      <wsdl:fault name="IncompleteDataException" message="tns:IncompleteDataException">
+    </wsdl:fault>
+      <wsdl:fault name="ConflictException" message="tns:ConflictException">
+    </wsdl:fault>
+      <wsdl:fault name="NoSuchTopicException" message="tns:NoSuchTopicException">
+    </wsdl:fault>
+      <wsdl:fault name="InvalidDataException" message="tns:InvalidDataException">
+    </wsdl:fault>
+      <wsdl:fault name="AuthenicationRequiredException" message="tns:AuthenicationRequiredException">
+    </wsdl:fault>
+      <wsdl:fault name="NotAuthorizedException" message="tns:NotAuthorizedException">
+    </wsdl:fault>
+      <wsdl:fault name="MediaFormatNotExceptedException" message="tns:MediaFormatNotExceptedException">
+    </wsdl:fault>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="BrokerManagementServiceServiceSoapBinding" type="tns:brokermanagement">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="createUser">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="createUser">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="createUserResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="IncompleteDataException">
+        <soap:fault name="IncompleteDataException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="ConflictException">
+        <soap:fault name="ConflictException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="InvalidDataException">
+        <soap:fault name="InvalidDataException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="AuthenicationRequiredException">
+        <soap:fault name="AuthenicationRequiredException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="NotAuthorizedException">
+        <soap:fault name="NotAuthorizedException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getTopicMetadata">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="getTopicMetadata">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="getTopicMetadataResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="ExpiredException">
+        <soap:fault name="ExpiredException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="NoSuchTopicException">
+        <soap:fault name="NoSuchTopicException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="AuthenicationRequiredException">
+        <soap:fault name="AuthenicationRequiredException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="NotAuthorizedException">
+        <soap:fault name="NotAuthorizedException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="deleteUser">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="deleteUser">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="deleteUserResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="AuthenicationRequiredException">
+        <soap:fault name="AuthenicationRequiredException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="NotAuthorizedException">
+        <soap:fault name="NotAuthorizedException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="NoSuchItemException">
+        <soap:fault name="NoSuchItemException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="purgeAllTopicEvents">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="purgeAllTopicEvents">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="purgeAllTopicEventsResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="NoSuchTopicException">
+        <soap:fault name="NoSuchTopicException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="AuthenicationRequiredException">
+        <soap:fault name="AuthenicationRequiredException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="NotAuthorizedException">
+        <soap:fault name="NotAuthorizedException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getSubscriptionsForTopic">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="getSubscriptionsForTopic">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="getSubscriptionsForTopicResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="ExpiredException">
+        <soap:fault name="ExpiredException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="NoSuchTopicException">
+        <soap:fault name="NoSuchTopicException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="AuthenicationRequiredException">
+        <soap:fault name="AuthenicationRequiredException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="NotAuthorizedException">
+        <soap:fault name="NotAuthorizedException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="rejectBrokerAccessRequest">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="rejectBrokerAccessRequest">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="rejectBrokerAccessRequestResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="FeatureNotAvailableException">
+        <soap:fault name="FeatureNotAvailableException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="IncompleteDataException">
+        <soap:fault name="IncompleteDataException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="InvalidDataException">
+        <soap:fault name="InvalidDataException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="AuthenicationRequiredException">
+        <soap:fault name="AuthenicationRequiredException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="NotAuthorizedException">
+        <soap:fault name="NotAuthorizedException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="NoSuchItemException">
+        <soap:fault name="NoSuchItemException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getPublishersForTopic">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="getPublishersForTopic">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="getPublishersForTopicResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="ExpiredException">
+        <soap:fault name="ExpiredException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="NoSuchTopicException">
+        <soap:fault name="NoSuchTopicException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="AuthenicationRequiredException">
+        <soap:fault name="AuthenicationRequiredException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="NotAuthorizedException">
+        <soap:fault name="NotAuthorizedException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="updateUser">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="updateUser">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="updateUserResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="IncompleteDataException">
+        <soap:fault name="IncompleteDataException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="InvalidDataException">
+        <soap:fault name="InvalidDataException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="AuthenicationRequiredException">
+        <soap:fault name="AuthenicationRequiredException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="NotAuthorizedException">
+        <soap:fault name="NotAuthorizedException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="NoSuchItemException">
+        <soap:fault name="NoSuchItemException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="MediaFormatNotExceptedException">
+        <soap:fault name="MediaFormatNotExceptedException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="moveTopic">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="moveTopic">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="moveTopicResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="ConflictException">
+        <soap:fault name="ConflictException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="NoSuchTopicException">
+        <soap:fault name="NoSuchTopicException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="AuthenicationRequiredException">
+        <soap:fault name="AuthenicationRequiredException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="NotAuthorizedException">
+        <soap:fault name="NotAuthorizedException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="deleteTopic">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="deleteTopic">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="deleteTopicResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="ConflictException">
+        <soap:fault name="ConflictException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="NoSuchTopicException">
+        <soap:fault name="NoSuchTopicException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="AuthenicationRequiredException">
+        <soap:fault name="AuthenicationRequiredException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="NotAuthorizedException">
+        <soap:fault name="NotAuthorizedException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="grantBrokerAccessRequest">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="grantBrokerAccessRequest">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="grantBrokerAccessRequestResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="FeatureNotAvailableException">
+        <soap:fault name="FeatureNotAvailableException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="IncompleteDataException">
+        <soap:fault name="IncompleteDataException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="InvalidDataException">
+        <soap:fault name="InvalidDataException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="AuthenicationRequiredException">
+        <soap:fault name="AuthenicationRequiredException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="NotAuthorizedException">
+        <soap:fault name="NotAuthorizedException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="NoSuchItemException">
+        <soap:fault name="NoSuchItemException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="configureTopic">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="configureTopic">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="configureTopicResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="FeatureNotAvailableException">
+        <soap:fault name="FeatureNotAvailableException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="ExpiredException">
+        <soap:fault name="ExpiredException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="IncompleteDataException">
+        <soap:fault name="IncompleteDataException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="ConflictException">
+        <soap:fault name="ConflictException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="NoSuchTopicException">
+        <soap:fault name="NoSuchTopicException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="InvalidDataException">
+        <soap:fault name="InvalidDataException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="AuthenicationRequiredException">
+        <soap:fault name="AuthenicationRequiredException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="NotAuthorizedException">
+        <soap:fault name="NotAuthorizedException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="MediaFormatNotExceptedException">
+        <soap:fault name="MediaFormatNotExceptedException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getBrokerAccessRequests">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="getBrokerAccessRequests">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="getBrokerAccessRequestsResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="FeatureNotAvailableException">
+        <soap:fault name="FeatureNotAvailableException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="AuthenicationRequiredException">
+        <soap:fault name="AuthenicationRequiredException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="NotAuthorizedException">
+        <soap:fault name="NotAuthorizedException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getUser">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="getUser">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="getUserResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="InvalidDataException">
+        <soap:fault name="InvalidDataException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="AuthenicationRequiredException">
+        <soap:fault name="AuthenicationRequiredException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="NotAuthorizedException">
+        <soap:fault name="NotAuthorizedException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="NoSuchItemException">
+        <soap:fault name="NoSuchItemException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="discoverUser">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="discoverUser">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="discoverUserResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="InvalidDataException">
+        <soap:fault name="InvalidDataException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="AuthenicationRequiredException">
+        <soap:fault name="AuthenicationRequiredException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="NotAuthorizedException">
+        <soap:fault name="NotAuthorizedException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="NoSuchItemException">
+        <soap:fault name="NoSuchItemException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="createTopic">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="createTopic">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="createTopicResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="FeatureNotAvailableException">
+        <soap:fault name="FeatureNotAvailableException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="ExpiredException">
+        <soap:fault name="ExpiredException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="IncompleteDataException">
+        <soap:fault name="IncompleteDataException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="ConflictException">
+        <soap:fault name="ConflictException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="NoSuchTopicException">
+        <soap:fault name="NoSuchTopicException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="InvalidDataException">
+        <soap:fault name="InvalidDataException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="AuthenicationRequiredException">
+        <soap:fault name="AuthenicationRequiredException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="NotAuthorizedException">
+        <soap:fault name="NotAuthorizedException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="MediaFormatNotExceptedException">
+        <soap:fault name="MediaFormatNotExceptedException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="BrokerManagementServiceService">
+    <wsdl:port name="brokermanagementPort" binding="tns:BrokerManagementServiceServiceSoapBinding">
+      <soap:address location="http://localhost:9090/brokermanagementPort"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>
