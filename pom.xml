@@ -107,7 +107,7 @@ limitations under the License.
             <!-- EPS API -->
             <dependency>
                 <groupId>org.socraticgrid.hl7</groupId>
-                <artifactId>eps-model</artifactId>
+                <artifactId>eps-api</artifactId>
                 <version>${eps.version}</version>
             </dependency>
             
