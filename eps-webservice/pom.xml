@@ -36,6 +36,11 @@ limitations under the License.
         </dependency>
         
         <dependency>
+            <groupId>org.socraticgrid.hl7</groupId>
+            <artifactId>eps-implementation-engine-ri</artifactId>
+        </dependency>
+        
+        <dependency>
             <groupId>com.sun.xml.ws</groupId>
             <artifactId>jaxws-rt</artifactId>
         </dependency>
