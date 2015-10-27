@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<import resource="classpath:beans/CommonPublicationValidationSteps.xml" />
+	<import resource="classpath:beans/CommonSubscriptionValidationSteps.xml" />
+	<import resource="classpath:beans/CommonPublicationInterventions.xml" />
+	<import resource="classpath:beans/SubscriptionIdGenerator.xml" />
+	<import resource="classpath:beans/TopicLocator.xml" />
+	<import resource="classpath:beans/Configuration.xml" />
+	<import resource="classpath:beans/Processes.xml" />
+
+</beans>

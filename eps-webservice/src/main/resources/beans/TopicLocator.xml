@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:core="http://cxf.apache.org/core" xmlns:beans="http://cxf.apache.org/configuration/beans"
+       xsi:schemaLocation="http://cxf.apache.org/configuration/beans http://cxf.apache.org/schemas/configuration/cxf-beans.xsd
+		http://cxf.apache.org/core http://cxf.apache.org/schemas/core.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+ 
+    <!--
+    This file overwrides the TopicLocator.xml file present in eps-engine-ri.
+    -->
+    
+    <bean id="BaseStaticLocator" name="BaseStaticLocator"
+              class="org.socraticgrid.hl7.services.eps.internal.StaticTopicTree">
+        <property name="rootTopic" ref="rootTopic" />
+    </bean>
+	 
+</beans>

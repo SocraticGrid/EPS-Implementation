@@ -64,13 +64,13 @@ public class BrokerManagementServiceImpl implements BrokerManagementIFace {
 	
 	
 	@Autowired
-	@Qualifier("TestUser")
+	@Qualifier("Admin")
 	private User user;
 	
 	@Autowired
 	TopicLocatorIFace topicLocator;
 	
-	@Autowired 
+	@Autowired(required = false)
 	KafkaBrokerBean kafkaBrokerBean;
 	
 	@Override
@@ -82,7 +82,7 @@ public class BrokerManagementServiceImpl implements BrokerManagementIFace {
 			InvalidDataException, IncompleteDataException {
 		
 			CreationResult out;
-			List<Role> userRole = user.getPrivledges();
+			List<Role> userRole = user.getPrivileges();
 	   
 			boolean userAuth = false;
 	  		 
@@ -152,7 +152,7 @@ public class BrokerManagementServiceImpl implements BrokerManagementIFace {
 			throws NotAuthorizedException, AuthenicationRequiredException,
 			ExpiredException, NoSuchTopicException {
 		
-			List<Role> userRole = user.getPrivledges();
+			List<Role> userRole = user.getPrivileges();
 		   
 			boolean pubAuth = false;
 		  		 
@@ -195,7 +195,7 @@ public class BrokerManagementServiceImpl implements BrokerManagementIFace {
 			throws NotAuthorizedException, AuthenicationRequiredException,
 			ExpiredException, NoSuchTopicException {
 		
-			List<Role> userRole = user.getPrivledges();
+			List<Role> userRole = user.getPrivileges();
 		   
 			boolean subAuth = false;
   		  		 

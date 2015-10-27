@@ -55,7 +55,7 @@ public class BrokerMonitoringServiceImpl implements BrokerMonitoringIFace {
 
 	private final Logger logger = LoggerFactory.getLogger(BrokerMonitoringServiceImpl.class);
 	
-	@Autowired 
+	@Autowired(required = false)
 	KafkaBrokerBean kafkaBrokerBean;
 	
 	/**

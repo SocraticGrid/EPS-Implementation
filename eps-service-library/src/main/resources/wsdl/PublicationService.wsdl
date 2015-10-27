@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<wsdl:definitions name="PublicationServiceService" targetNamespace="org.socraticgrid.hl7.services.eps" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:tns="org.socraticgrid.hl7.services.eps" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/">
+<wsdl:definitions name="PublicationServiceService" targetNamespace="org.socraticgrid.hl7.services.eps" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="org.socraticgrid.hl7.services.eps" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/">
   <wsdl:types>
 <xs:schema xmlns:tns="org.socraticgrid.hl7.services.eps" xmlns:xs="http://www.w3.org/2001/XMLSchema" attributeFormDefault="unqualified" elementFormDefault="unqualified" targetNamespace="org.socraticgrid.hl7.services.eps">
   <xs:element name="assertPublisherPresence" type="tns:assertPublisherPresence"/>
@@ -17,17 +17,6 @@
   </xs:complexType>
   <xs:complexType name="deleteEventResponse">
     <xs:sequence/>
-  </xs:complexType>
-  <xs:complexType name="assertPublisherPresence">
-    <xs:sequence>
-      <xs:element minOccurs="0" name="topic" type="xs:string"/>
-      <xs:element minOccurs="0" name="presence" type="tns:presenceState"/>
-    </xs:sequence>
-  </xs:complexType>
-  <xs:complexType name="assertPublisherPresenceResponse">
-    <xs:sequence>
-      <xs:element name="return" type="xs:boolean"/>
-    </xs:sequence>
   </xs:complexType>
   <xs:complexType name="publishEvent">
     <xs:sequence>
@@ -68,7 +57,7 @@
       <xs:element minOccurs="0" name="defaultNotificationAddress" type="tns:notificationAddress"/>
       <xs:element minOccurs="0" name="defaultOnDemandEndpoint" type="tns:notificationAddress"/>
       <xs:element minOccurs="0" name="name" type="xs:string"/>
-      <xs:element maxOccurs="unbounded" minOccurs="0" name="privledges" nillable="true" type="tns:role"/>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="privileges" nillable="true" type="tns:role"/>
       <xs:element name="supportsPublishOnDemand" type="xs:boolean"/>
       <xs:element minOccurs="0" name="userId" type="xs:string"/>
     </xs:sequence>
@@ -90,13 +79,17 @@
       <xs:element minOccurs="0" name="return" type="xs:string"/>
     </xs:sequence>
   </xs:complexType>
-  <xs:simpleType name="presenceState">
-    <xs:restriction base="xs:string">
-      <xs:enumeration value="Online"/>
-      <xs:enumeration value="Offline"/>
-      <xs:enumeration value="Indeterminate"/>
-    </xs:restriction>
-  </xs:simpleType>
+  <xs:complexType name="assertPublisherPresence">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="topic" type="xs:string"/>
+      <xs:element minOccurs="0" name="presence" type="tns:presenceState"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="assertPublisherPresenceResponse">
+    <xs:sequence>
+      <xs:element name="return" type="xs:boolean"/>
+    </xs:sequence>
+  </xs:complexType>
   <xs:simpleType name="addressType">
     <xs:restriction base="xs:string">
       <xs:enumeration value="URI"/>
@@ -122,8 +115,15 @@
       <xs:enumeration value="Pending"/>
     </xs:restriction>
   </xs:simpleType>
-  <xs:element name="ExpiredException" type="tns:ExpiredException"/>
-  <xs:complexType name="ExpiredException">
+  <xs:simpleType name="presenceState">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Online"/>
+      <xs:enumeration value="Offline"/>
+      <xs:enumeration value="Indeterminate"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="NoSuchItemException" type="tns:NoSuchItemException"/>
+  <xs:complexType name="NoSuchItemException">
     <xs:sequence>
       <xs:element minOccurs="0" name="message" type="xs:string"/>
     </xs:sequence>
@@ -131,18 +131,25 @@
   <xs:element name="NoSuchTopicException" type="tns:NoSuchTopicException"/>
   <xs:complexType name="NoSuchTopicException">
     <xs:sequence>
-      <xs:element minOccurs="0" name="message" type="xs:string"/>
       <xs:element minOccurs="0" name="topic" type="xs:string"/>
+      <xs:element minOccurs="0" name="message" type="xs:string"/>
     </xs:sequence>
   </xs:complexType>
-  <xs:element name="NoSuchItemException" type="tns:NoSuchItemException"/>
-  <xs:complexType name="NoSuchItemException">
+  <xs:element name="ExpiredException" type="tns:ExpiredException"/>
+  <xs:complexType name="ExpiredException">
     <xs:sequence>
       <xs:element minOccurs="0" name="message" type="xs:string"/>
     </xs:sequence>
   </xs:complexType>
-  <xs:element name="NotAuthorizedException" type="tns:NotAuthorizedException"/>
-  <xs:complexType name="NotAuthorizedException">
+  <xs:element name="IncompleteDataException" type="tns:IncompleteDataException"/>
+  <xs:complexType name="IncompleteDataException">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="missingElementName" type="xs:string"/>
+      <xs:element minOccurs="0" name="message" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="InvalidDataException" type="tns:InvalidDataException"/>
+  <xs:complexType name="InvalidDataException">
     <xs:sequence>
       <xs:element minOccurs="0" name="message" type="xs:string"/>
     </xs:sequence>
@@ -153,14 +160,8 @@
       <xs:element minOccurs="0" name="message" type="xs:string"/>
     </xs:sequence>
   </xs:complexType>
-  <xs:element name="ConflictException" type="tns:ConflictException"/>
-  <xs:complexType name="ConflictException">
-    <xs:sequence>
-      <xs:element minOccurs="0" name="message" type="xs:string"/>
-    </xs:sequence>
-  </xs:complexType>
-  <xs:element name="InvalidDataException" type="tns:InvalidDataException"/>
-  <xs:complexType name="InvalidDataException">
+  <xs:element name="NotAuthorizedException" type="tns:NotAuthorizedException"/>
+  <xs:complexType name="NotAuthorizedException">
     <xs:sequence>
       <xs:element minOccurs="0" name="message" type="xs:string"/>
     </xs:sequence>
@@ -172,25 +173,28 @@
       <xs:element minOccurs="0" name="message" type="xs:string"/>
     </xs:sequence>
   </xs:complexType>
-  <xs:element name="IncompleteDataException" type="tns:IncompleteDataException"/>
-  <xs:complexType name="IncompleteDataException">
+  <xs:element name="ConflictException" type="tns:ConflictException"/>
+  <xs:complexType name="ConflictException">
     <xs:sequence>
       <xs:element minOccurs="0" name="message" type="xs:string"/>
-      <xs:element minOccurs="0" name="missingElementName" type="xs:string"/>
     </xs:sequence>
   </xs:complexType>
 </xs:schema>
   </wsdl:types>
+  <wsdl:message name="assertPublisherPresenceResponse">
+    <wsdl:part name="parameters" element="tns:assertPublisherPresenceResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="AuthenicationRequiredException">
+    <wsdl:part name="AuthenicationRequiredException" element="tns:AuthenicationRequiredException">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="NoSuchTopicException">
+    <wsdl:part name="NoSuchTopicException" element="tns:NoSuchTopicException">
+    </wsdl:part>
+  </wsdl:message>
   <wsdl:message name="deleteEvent">
     <wsdl:part name="parameters" element="tns:deleteEvent">
-    </wsdl:part>
-  </wsdl:message>
-  <wsdl:message name="InvalidDataException">
-    <wsdl:part name="InvalidDataException" element="tns:InvalidDataException">
-    </wsdl:part>
-  </wsdl:message>
-  <wsdl:message name="deleteEventResponse">
-    <wsdl:part name="parameters" element="tns:deleteEventResponse">
     </wsdl:part>
   </wsdl:message>
   <wsdl:message name="MediaFormatNotExceptedException">
@@ -201,44 +205,40 @@
     <wsdl:part name="ExpiredException" element="tns:ExpiredException">
     </wsdl:part>
   </wsdl:message>
-  <wsdl:message name="publishEventResponse">
-    <wsdl:part name="parameters" element="tns:publishEventResponse">
-    </wsdl:part>
-  </wsdl:message>
-  <wsdl:message name="publishEvent">
-    <wsdl:part name="parameters" element="tns:publishEvent">
-    </wsdl:part>
-  </wsdl:message>
-  <wsdl:message name="NotAuthorizedException">
-    <wsdl:part name="NotAuthorizedException" element="tns:NotAuthorizedException">
-    </wsdl:part>
-  </wsdl:message>
-  <wsdl:message name="AuthenicationRequiredException">
-    <wsdl:part name="AuthenicationRequiredException" element="tns:AuthenicationRequiredException">
-    </wsdl:part>
-  </wsdl:message>
   <wsdl:message name="assertPublisherPresence">
     <wsdl:part name="parameters" element="tns:assertPublisherPresence">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="IncompleteDataException">
+    <wsdl:part name="IncompleteDataException" element="tns:IncompleteDataException">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="InvalidDataException">
+    <wsdl:part name="InvalidDataException" element="tns:InvalidDataException">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="deleteEventResponse">
+    <wsdl:part name="parameters" element="tns:deleteEventResponse">
     </wsdl:part>
   </wsdl:message>
   <wsdl:message name="NoSuchItemException">
     <wsdl:part name="NoSuchItemException" element="tns:NoSuchItemException">
     </wsdl:part>
   </wsdl:message>
-  <wsdl:message name="assertPublisherPresenceResponse">
-    <wsdl:part name="parameters" element="tns:assertPublisherPresenceResponse">
-    </wsdl:part>
-  </wsdl:message>
-  <wsdl:message name="NoSuchTopicException">
-    <wsdl:part name="NoSuchTopicException" element="tns:NoSuchTopicException">
-    </wsdl:part>
-  </wsdl:message>
   <wsdl:message name="ConflictException">
     <wsdl:part name="ConflictException" element="tns:ConflictException">
     </wsdl:part>
   </wsdl:message>
-  <wsdl:message name="IncompleteDataException">
-    <wsdl:part name="IncompleteDataException" element="tns:IncompleteDataException">
+  <wsdl:message name="NotAuthorizedException">
+    <wsdl:part name="NotAuthorizedException" element="tns:NotAuthorizedException">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="publishEvent">
+    <wsdl:part name="parameters" element="tns:publishEvent">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="publishEventResponse">
+    <wsdl:part name="parameters" element="tns:publishEventResponse">
     </wsdl:part>
   </wsdl:message>
   <wsdl:portType name="publication">
@@ -247,25 +247,11 @@
     </wsdl:input>
       <wsdl:output name="deleteEventResponse" message="tns:deleteEventResponse">
     </wsdl:output>
-      <wsdl:fault name="ExpiredException" message="tns:ExpiredException">
-    </wsdl:fault>
       <wsdl:fault name="NoSuchTopicException" message="tns:NoSuchTopicException">
     </wsdl:fault>
       <wsdl:fault name="NoSuchItemException" message="tns:NoSuchItemException">
     </wsdl:fault>
-    </wsdl:operation>
-    <wsdl:operation name="assertPublisherPresence">
-      <wsdl:input name="assertPublisherPresence" message="tns:assertPublisherPresence">
-    </wsdl:input>
-      <wsdl:output name="assertPublisherPresenceResponse" message="tns:assertPublisherPresenceResponse">
-    </wsdl:output>
       <wsdl:fault name="ExpiredException" message="tns:ExpiredException">
-    </wsdl:fault>
-      <wsdl:fault name="ConflictException" message="tns:ConflictException">
-    </wsdl:fault>
-      <wsdl:fault name="AuthenicationRequiredException" message="tns:AuthenicationRequiredException">
-    </wsdl:fault>
-      <wsdl:fault name="NotAuthorizedException" message="tns:NotAuthorizedException">
     </wsdl:fault>
     </wsdl:operation>
     <wsdl:operation name="publishEvent">
@@ -273,17 +259,31 @@
     </wsdl:input>
       <wsdl:output name="publishEventResponse" message="tns:publishEventResponse">
     </wsdl:output>
-      <wsdl:fault name="IncompleteDataException" message="tns:IncompleteDataException">
-    </wsdl:fault>
       <wsdl:fault name="NoSuchTopicException" message="tns:NoSuchTopicException">
     </wsdl:fault>
       <wsdl:fault name="InvalidDataException" message="tns:InvalidDataException">
     </wsdl:fault>
       <wsdl:fault name="AuthenicationRequiredException" message="tns:AuthenicationRequiredException">
     </wsdl:fault>
-      <wsdl:fault name="NotAuthorizedException" message="tns:NotAuthorizedException">
+      <wsdl:fault name="IncompleteDataException" message="tns:IncompleteDataException">
     </wsdl:fault>
       <wsdl:fault name="MediaFormatNotExceptedException" message="tns:MediaFormatNotExceptedException">
+    </wsdl:fault>
+      <wsdl:fault name="NotAuthorizedException" message="tns:NotAuthorizedException">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="assertPublisherPresence">
+      <wsdl:input name="assertPublisherPresence" message="tns:assertPublisherPresence">
+    </wsdl:input>
+      <wsdl:output name="assertPublisherPresenceResponse" message="tns:assertPublisherPresenceResponse">
+    </wsdl:output>
+      <wsdl:fault name="AuthenicationRequiredException" message="tns:AuthenicationRequiredException">
+    </wsdl:fault>
+      <wsdl:fault name="ExpiredException" message="tns:ExpiredException">
+    </wsdl:fault>
+      <wsdl:fault name="NotAuthorizedException" message="tns:NotAuthorizedException">
+    </wsdl:fault>
+      <wsdl:fault name="ConflictException" message="tns:ConflictException">
     </wsdl:fault>
     </wsdl:operation>
   </wsdl:portType>
@@ -297,35 +297,14 @@
       <wsdl:output name="deleteEventResponse">
         <soap:body use="literal"/>
       </wsdl:output>
-      <wsdl:fault name="ExpiredException">
-        <soap:fault name="ExpiredException" use="literal"/>
-      </wsdl:fault>
       <wsdl:fault name="NoSuchTopicException">
         <soap:fault name="NoSuchTopicException" use="literal"/>
       </wsdl:fault>
       <wsdl:fault name="NoSuchItemException">
         <soap:fault name="NoSuchItemException" use="literal"/>
       </wsdl:fault>
-    </wsdl:operation>
-    <wsdl:operation name="assertPublisherPresence">
-      <soap:operation soapAction="" style="document"/>
-      <wsdl:input name="assertPublisherPresence">
-        <soap:body use="literal"/>
-      </wsdl:input>
-      <wsdl:output name="assertPublisherPresenceResponse">
-        <soap:body use="literal"/>
-      </wsdl:output>
       <wsdl:fault name="ExpiredException">
         <soap:fault name="ExpiredException" use="literal"/>
-      </wsdl:fault>
-      <wsdl:fault name="ConflictException">
-        <soap:fault name="ConflictException" use="literal"/>
-      </wsdl:fault>
-      <wsdl:fault name="AuthenicationRequiredException">
-        <soap:fault name="AuthenicationRequiredException" use="literal"/>
-      </wsdl:fault>
-      <wsdl:fault name="NotAuthorizedException">
-        <soap:fault name="NotAuthorizedException" use="literal"/>
       </wsdl:fault>
     </wsdl:operation>
     <wsdl:operation name="publishEvent">
@@ -336,9 +315,6 @@
       <wsdl:output name="publishEventResponse">
         <soap:body use="literal"/>
       </wsdl:output>
-      <wsdl:fault name="IncompleteDataException">
-        <soap:fault name="IncompleteDataException" use="literal"/>
-      </wsdl:fault>
       <wsdl:fault name="NoSuchTopicException">
         <soap:fault name="NoSuchTopicException" use="literal"/>
       </wsdl:fault>
@@ -348,11 +324,35 @@
       <wsdl:fault name="AuthenicationRequiredException">
         <soap:fault name="AuthenicationRequiredException" use="literal"/>
       </wsdl:fault>
-      <wsdl:fault name="NotAuthorizedException">
-        <soap:fault name="NotAuthorizedException" use="literal"/>
+      <wsdl:fault name="IncompleteDataException">
+        <soap:fault name="IncompleteDataException" use="literal"/>
       </wsdl:fault>
       <wsdl:fault name="MediaFormatNotExceptedException">
         <soap:fault name="MediaFormatNotExceptedException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="NotAuthorizedException">
+        <soap:fault name="NotAuthorizedException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="assertPublisherPresence">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="assertPublisherPresence">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="assertPublisherPresenceResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="AuthenicationRequiredException">
+        <soap:fault name="AuthenicationRequiredException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="ExpiredException">
+        <soap:fault name="ExpiredException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="NotAuthorizedException">
+        <soap:fault name="NotAuthorizedException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="ConflictException">
+        <soap:fault name="ConflictException" use="literal"/>
       </wsdl:fault>
     </wsdl:operation>
   </wsdl:binding>

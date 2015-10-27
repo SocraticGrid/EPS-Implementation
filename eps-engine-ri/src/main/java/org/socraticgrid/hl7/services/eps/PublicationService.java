@@ -15,6 +15,7 @@
  */
 package org.socraticgrid.hl7.services.eps;
 
+import javax.jws.WebMethod;
 import javax.jws.WebParam;
 import javax.jws.WebService;
 
@@ -45,7 +46,7 @@ public class PublicationService implements PublicationIFace {
 
 	private final Logger logger = LoggerFactory
 			.getLogger(PublicationService.class);
-
+        
 	@Override
 	public String publishEvent(@WebParam(name = "topic") String topic,
 			@WebParam(name = "event") Message event)

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+
+	<bean id="StandardConfig" name="StandardConfig"
+		class="org.socraticgrid.spring.tools.configuration.ConfigurationTaskQueue">
+		<property name="items">
+			<list>
+				<bean
+					class="org.socraticgrid.spring.tools.configuration.PropertyAssignmentTask">
+					<property name="beanName" value="KMFEPSSubscriber"></property>
+					<property name="property" value="subscriberNotificationAddress"></property>
+					<property name="value">
+						<bean
+							class="org.socraticgrid.hl7.services.eps.model.NotificationAddress">
+							<property name="endpoint"
+								value="http://localhost:8080/KMFEPSSubcriber/pssubscriptionclient" />
+							<property name="type" value="URI" />
+						</bean>
+					</property>
+				</bean>
+			</list>
+		</property>
+	</bean>
+	
+	
+</beans>

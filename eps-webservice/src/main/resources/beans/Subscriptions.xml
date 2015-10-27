@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!--
+    This file overwrides the Subscriptions.xml file present in eps-engine-ri.
+    
+    Subscriptions are not required to be predefined here; they can be dynamically
+    created using the SubscriptionService endpoint.
+    
+    2 types of subscriptions are supported:
+        * Pull (require a we user - see Users.xml file for more information)
+        * Push
+        
+    -->
+    
+    <bean name="InternalSubscription" id="InternalSubscription"
+              class="org.socraticgrid.hl7.services.eps.model.Subscription">
+        <property name="type" value="Pull" />
+        <property name="durability" value="Transient"></property>
+        <property name="subscriber" ref="EPSUser" />
+    </bean>
+
+</beans>

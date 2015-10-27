@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	
+    <!--
+    This file overwrides the Topics.xml file present in eps-engine-ri.
+    
+    3 Transient topics are defined in this file:
+    
+    - rootTopic
+        |_ /Labs
+        |_ /Test
+        
+    
+    -->
+    
+    <bean class="org.socraticgrid.hl7.services.eps.internal.model.TransientTopic"
+              name="rootTopic" id="rootTopic">
+        <property name="subTopics">
+            <map>
+                <entry key="Labs">
+                    <ref bean="LabTopicBean" />
+                </entry>
+                <entry key="Test Topic">
+                    <ref bean="TestTopicBean" />
+                </entry>
+            </map>
+        </property>
+    </bean>
+
+    <bean name="LabTopicBean" id="LabTopicBean"
+              class="org.socraticgrid.hl7.services.eps.internal.model.TransientTopic">
+        <property name="parentTopic" ref="rootTopic" />
+        <property name="topic">
+            <bean class="org.socraticgrid.hl7.services.eps.model.Topic">
+                <property name="name" value="Labs" />
+                <property name="optionsList">
+                    <bean class="org.socraticgrid.hl7.services.eps.model.Options">
+                        <property name="access" value="Open"></property>
+                        <property name="durability" value="Transient"></property>
+                    </bean>
+                </property>
+            </bean>
+        </property>
+        <property name="subscriptions">
+            <list>
+                <ref bean="InternalSubscription" />
+            </list>
+        </property>
+    </bean>
+
+    <bean name="TestTopicBean" id="TestTopicBean"
+              class="org.socraticgrid.hl7.services.eps.internal.model.TransientTopic">
+        <property name="parentTopic" ref="rootTopic" />
+        <property name="topic">
+            <bean class="org.socraticgrid.hl7.services.eps.model.Topic">
+                <property name="name" value="Test" />
+                <property name="optionsList">
+                    <bean class="org.socraticgrid.hl7.services.eps.model.Options">
+                        <property name="access" value="Open"></property>
+                        <property name="durability" value="Transient"></property>
+                    </bean>
+                </property>
+
+            </bean>
+        </property>
+        <property name="subscriptions">
+            <list>
+                <ref bean="InternalSubscription" />
+            </list>
+        </property>
+    </bean>
+    
+</beans>

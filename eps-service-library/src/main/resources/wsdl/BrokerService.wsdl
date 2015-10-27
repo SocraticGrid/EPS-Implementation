@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<wsdl:definitions name="BrokerServiceService" targetNamespace="org.socraticgrid.hl7.services.eps" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:tns="org.socraticgrid.hl7.services.eps" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/">
+<wsdl:definitions name="BrokerServiceService" targetNamespace="org.socraticgrid.hl7.services.eps" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="org.socraticgrid.hl7.services.eps" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/">
   <wsdl:types>
 <xs:schema xmlns:tns="org.socraticgrid.hl7.services.eps" xmlns:xs="http://www.w3.org/2001/XMLSchema" attributeFormDefault="unqualified" elementFormDefault="unqualified" targetNamespace="org.socraticgrid.hl7.services.eps">
   <xs:element name="discoverCapabilities" type="tns:discoverCapabilities"/>
@@ -14,23 +14,6 @@
   <xs:element name="getTopicOptionsResponse" type="tns:getTopicOptionsResponse"/>
   <xs:element name="requestAccess" type="tns:requestAccess"/>
   <xs:element name="requestAccessResponse" type="tns:requestAccessResponse"/>
-  <xs:complexType name="discoverTopics">
-    <xs:sequence>
-      <xs:element minOccurs="0" name="query" type="xs:string"/>
-    </xs:sequence>
-  </xs:complexType>
-  <xs:complexType name="discoverTopicsResponse">
-    <xs:sequence>
-      <xs:element maxOccurs="unbounded" minOccurs="0" name="return" type="tns:topicSummary"/>
-    </xs:sequence>
-  </xs:complexType>
-  <xs:complexType name="topicSummary">
-    <xs:sequence>
-      <xs:element minOccurs="0" name="description" type="xs:string"/>
-      <xs:element minOccurs="0" name="name" type="xs:string"/>
-      <xs:element minOccurs="0" name="topicId" type="xs:string"/>
-    </xs:sequence>
-  </xs:complexType>
   <xs:complexType name="requestAccess">
     <xs:sequence>
       <xs:element minOccurs="0" name="userInfo" type="tns:user"/>
@@ -41,7 +24,7 @@
       <xs:element minOccurs="0" name="defaultNotificationAddress" type="tns:notificationAddress"/>
       <xs:element minOccurs="0" name="defaultOnDemandEndpoint" type="tns:notificationAddress"/>
       <xs:element minOccurs="0" name="name" type="xs:string"/>
-      <xs:element maxOccurs="unbounded" minOccurs="0" name="privledges" nillable="true" type="tns:role"/>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="privileges" nillable="true" type="tns:role"/>
       <xs:element name="supportsPublishOnDemand" type="xs:boolean"/>
       <xs:element minOccurs="0" name="userId" type="xs:string"/>
     </xs:sequence>
@@ -67,19 +50,21 @@
       <xs:element maxOccurs="unbounded" minOccurs="0" name="return" type="tns:topicSummary"/>
     </xs:sequence>
   </xs:complexType>
-  <xs:complexType name="discoverCapabilities">
-    <xs:sequence/>
-  </xs:complexType>
-  <xs:complexType name="discoverCapabilitiesResponse">
+  <xs:complexType name="topicSummary">
     <xs:sequence>
-      <xs:element minOccurs="0" name="return" type="tns:capabilities"/>
+      <xs:element minOccurs="0" name="description" type="xs:string"/>
+      <xs:element minOccurs="0" name="name" type="xs:string"/>
+      <xs:element minOccurs="0" name="topicId" type="xs:string"/>
     </xs:sequence>
   </xs:complexType>
-  <xs:complexType name="capabilities">
+  <xs:complexType name="discoverTopics">
     <xs:sequence>
-      <xs:element name="durableTopics" type="xs:boolean"/>
-      <xs:element name="publishOnDeman" type="xs:boolean"/>
-      <xs:element name="pushEvents" type="xs:boolean"/>
+      <xs:element minOccurs="0" name="query" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="discoverTopicsResponse">
+    <xs:sequence>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="return" type="tns:topicSummary"/>
     </xs:sequence>
   </xs:complexType>
   <xs:complexType name="discoverEventsForTopic">
@@ -128,6 +113,21 @@
       <xs:element minOccurs="0" name="durability" type="tns:durability"/>
     </xs:sequence>
   </xs:complexType>
+  <xs:complexType name="discoverCapabilities">
+    <xs:sequence/>
+  </xs:complexType>
+  <xs:complexType name="discoverCapabilitiesResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="tns:capabilities"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="capabilities">
+    <xs:sequence>
+      <xs:element name="durableTopics" type="xs:boolean"/>
+      <xs:element name="publishOnDeman" type="xs:boolean"/>
+      <xs:element name="pushEvents" type="xs:boolean"/>
+    </xs:sequence>
+  </xs:complexType>
   <xs:simpleType name="addressType">
     <xs:restriction base="xs:string">
       <xs:enumeration value="URI"/>
@@ -161,14 +161,28 @@
       <xs:enumeration value="Robust"/>
     </xs:restriction>
   </xs:simpleType>
-  <xs:element name="NotAuthorizedException" type="tns:NotAuthorizedException"/>
-  <xs:complexType name="NotAuthorizedException">
+  <xs:element name="IncompleteDataException" type="tns:IncompleteDataException"/>
+  <xs:complexType name="IncompleteDataException">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="missingElementName" type="xs:string"/>
+      <xs:element minOccurs="0" name="message" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="InvalidDataException" type="tns:InvalidDataException"/>
+  <xs:complexType name="InvalidDataException">
     <xs:sequence>
       <xs:element minOccurs="0" name="message" type="xs:string"/>
     </xs:sequence>
   </xs:complexType>
-  <xs:element name="ExpiredException" type="tns:ExpiredException"/>
-  <xs:complexType name="ExpiredException">
+  <xs:element name="FeatureNotAvailableException" type="tns:FeatureNotAvailableException"/>
+  <xs:complexType name="FeatureNotAvailableException">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="canonicFeatureName" type="xs:string"/>
+      <xs:element minOccurs="0" name="message" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ConflictException" type="tns:ConflictException"/>
+  <xs:complexType name="ConflictException">
     <xs:sequence>
       <xs:element minOccurs="0" name="message" type="xs:string"/>
     </xs:sequence>
@@ -182,88 +196,26 @@
   <xs:element name="NoSuchTopicException" type="tns:NoSuchTopicException"/>
   <xs:complexType name="NoSuchTopicException">
     <xs:sequence>
-      <xs:element minOccurs="0" name="message" type="xs:string"/>
       <xs:element minOccurs="0" name="topic" type="xs:string"/>
+      <xs:element minOccurs="0" name="message" type="xs:string"/>
     </xs:sequence>
   </xs:complexType>
-  <xs:element name="ConflictException" type="tns:ConflictException"/>
-  <xs:complexType name="ConflictException">
+  <xs:element name="NotAuthorizedException" type="tns:NotAuthorizedException"/>
+  <xs:complexType name="NotAuthorizedException">
     <xs:sequence>
       <xs:element minOccurs="0" name="message" type="xs:string"/>
     </xs:sequence>
   </xs:complexType>
-  <xs:element name="FeatureNotAvailableException" type="tns:FeatureNotAvailableException"/>
-  <xs:complexType name="FeatureNotAvailableException">
-    <xs:sequence>
-      <xs:element minOccurs="0" name="canonicFeatureName" type="xs:string"/>
-      <xs:element minOccurs="0" name="message" type="xs:string"/>
-    </xs:sequence>
-  </xs:complexType>
-  <xs:element name="InvalidDataException" type="tns:InvalidDataException"/>
-  <xs:complexType name="InvalidDataException">
+  <xs:element name="ExpiredException" type="tns:ExpiredException"/>
+  <xs:complexType name="ExpiredException">
     <xs:sequence>
       <xs:element minOccurs="0" name="message" type="xs:string"/>
-    </xs:sequence>
-  </xs:complexType>
-  <xs:element name="IncompleteDataException" type="tns:IncompleteDataException"/>
-  <xs:complexType name="IncompleteDataException">
-    <xs:sequence>
-      <xs:element minOccurs="0" name="message" type="xs:string"/>
-      <xs:element minOccurs="0" name="missingElementName" type="xs:string"/>
     </xs:sequence>
   </xs:complexType>
 </xs:schema>
   </wsdl:types>
-  <wsdl:message name="discoverEventsForTopicResponse">
-    <wsdl:part name="parameters" element="tns:discoverEventsForTopicResponse">
-    </wsdl:part>
-  </wsdl:message>
-  <wsdl:message name="InvalidDataException">
-    <wsdl:part name="InvalidDataException" element="tns:InvalidDataException">
-    </wsdl:part>
-  </wsdl:message>
-  <wsdl:message name="discoverTopicsResponse">
-    <wsdl:part name="parameters" element="tns:discoverTopicsResponse">
-    </wsdl:part>
-  </wsdl:message>
-  <wsdl:message name="ExpiredException">
-    <wsdl:part name="ExpiredException" element="tns:ExpiredException">
-    </wsdl:part>
-  </wsdl:message>
-  <wsdl:message name="requestAccessResponse">
-    <wsdl:part name="parameters" element="tns:requestAccessResponse">
-    </wsdl:part>
-  </wsdl:message>
-  <wsdl:message name="discoverCapabilitiesResponse">
-    <wsdl:part name="parameters" element="tns:discoverCapabilitiesResponse">
-    </wsdl:part>
-  </wsdl:message>
-  <wsdl:message name="FeatureNotAvailableException">
-    <wsdl:part name="FeatureNotAvailableException" element="tns:FeatureNotAvailableException">
-    </wsdl:part>
-  </wsdl:message>
-  <wsdl:message name="getSubTopics">
-    <wsdl:part name="parameters" element="tns:getSubTopics">
-    </wsdl:part>
-  </wsdl:message>
-  <wsdl:message name="getSubTopicsResponse">
-    <wsdl:part name="parameters" element="tns:getSubTopicsResponse">
-    </wsdl:part>
-  </wsdl:message>
   <wsdl:message name="discoverCapabilities">
     <wsdl:part name="parameters" element="tns:discoverCapabilities">
-    </wsdl:part>
-  </wsdl:message>
-  <wsdl:message name="discoverTopics">
-    <wsdl:part name="parameters" element="tns:discoverTopics">
-    </wsdl:part>
-  </wsdl:message>
-  <wsdl:message name="NotAuthorizedException">
-    <wsdl:part name="NotAuthorizedException" element="tns:NotAuthorizedException">
-    </wsdl:part>
-  </wsdl:message>
-  <wsdl:message name="requestAccess">
-    <wsdl:part name="parameters" element="tns:requestAccess">
     </wsdl:part>
   </wsdl:message>
   <wsdl:message name="AuthenicationRequiredException">
@@ -274,55 +226,87 @@
     <wsdl:part name="parameters" element="tns:getTopicOptionsResponse">
     </wsdl:part>
   </wsdl:message>
+  <wsdl:message name="getTopicOptions">
+    <wsdl:part name="parameters" element="tns:getTopicOptions">
+    </wsdl:part>
+  </wsdl:message>
   <wsdl:message name="NoSuchTopicException">
     <wsdl:part name="NoSuchTopicException" element="tns:NoSuchTopicException">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="discoverTopics">
+    <wsdl:part name="parameters" element="tns:discoverTopics">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getSubTopics">
+    <wsdl:part name="parameters" element="tns:getSubTopics">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="FeatureNotAvailableException">
+    <wsdl:part name="FeatureNotAvailableException" element="tns:FeatureNotAvailableException">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="requestAccess">
+    <wsdl:part name="parameters" element="tns:requestAccess">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="discoverCapabilitiesResponse">
+    <wsdl:part name="parameters" element="tns:discoverCapabilitiesResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="ExpiredException">
+    <wsdl:part name="ExpiredException" element="tns:ExpiredException">
     </wsdl:part>
   </wsdl:message>
   <wsdl:message name="discoverEventsForTopic">
     <wsdl:part name="parameters" element="tns:discoverEventsForTopic">
     </wsdl:part>
   </wsdl:message>
-  <wsdl:message name="ConflictException">
-    <wsdl:part name="ConflictException" element="tns:ConflictException">
+  <wsdl:message name="requestAccessResponse">
+    <wsdl:part name="parameters" element="tns:requestAccessResponse">
     </wsdl:part>
   </wsdl:message>
   <wsdl:message name="IncompleteDataException">
     <wsdl:part name="IncompleteDataException" element="tns:IncompleteDataException">
     </wsdl:part>
   </wsdl:message>
-  <wsdl:message name="getTopicOptions">
-    <wsdl:part name="parameters" element="tns:getTopicOptions">
+  <wsdl:message name="InvalidDataException">
+    <wsdl:part name="InvalidDataException" element="tns:InvalidDataException">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="discoverTopicsResponse">
+    <wsdl:part name="parameters" element="tns:discoverTopicsResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="discoverEventsForTopicResponse">
+    <wsdl:part name="parameters" element="tns:discoverEventsForTopicResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="ConflictException">
+    <wsdl:part name="ConflictException" element="tns:ConflictException">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getSubTopicsResponse">
+    <wsdl:part name="parameters" element="tns:getSubTopicsResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="NotAuthorizedException">
+    <wsdl:part name="NotAuthorizedException" element="tns:NotAuthorizedException">
     </wsdl:part>
   </wsdl:message>
   <wsdl:portType name="broker">
-    <wsdl:operation name="discoverTopics">
-      <wsdl:input name="discoverTopics" message="tns:discoverTopics">
-    </wsdl:input>
-      <wsdl:output name="discoverTopicsResponse" message="tns:discoverTopicsResponse">
-    </wsdl:output>
-      <wsdl:fault name="ExpiredException" message="tns:ExpiredException">
-    </wsdl:fault>
-      <wsdl:fault name="ConflictException" message="tns:ConflictException">
-    </wsdl:fault>
-      <wsdl:fault name="NoSuchTopicException" message="tns:NoSuchTopicException">
-    </wsdl:fault>
-      <wsdl:fault name="AuthenicationRequiredException" message="tns:AuthenicationRequiredException">
-    </wsdl:fault>
-      <wsdl:fault name="NotAuthorizedException" message="tns:NotAuthorizedException">
-    </wsdl:fault>
-    </wsdl:operation>
     <wsdl:operation name="requestAccess">
       <wsdl:input name="requestAccess" message="tns:requestAccess">
     </wsdl:input>
       <wsdl:output name="requestAccessResponse" message="tns:requestAccessResponse">
     </wsdl:output>
-      <wsdl:fault name="FeatureNotAvailableException" message="tns:FeatureNotAvailableException">
+      <wsdl:fault name="InvalidDataException" message="tns:InvalidDataException">
     </wsdl:fault>
       <wsdl:fault name="IncompleteDataException" message="tns:IncompleteDataException">
     </wsdl:fault>
       <wsdl:fault name="ConflictException" message="tns:ConflictException">
     </wsdl:fault>
-      <wsdl:fault name="InvalidDataException" message="tns:InvalidDataException">
+      <wsdl:fault name="FeatureNotAvailableException" message="tns:FeatureNotAvailableException">
     </wsdl:fault>
     </wsdl:operation>
     <wsdl:operation name="getSubTopics">
@@ -330,13 +314,59 @@
     </wsdl:input>
       <wsdl:output name="getSubTopicsResponse" message="tns:getSubTopicsResponse">
     </wsdl:output>
+      <wsdl:fault name="NoSuchTopicException" message="tns:NoSuchTopicException">
+    </wsdl:fault>
+      <wsdl:fault name="AuthenicationRequiredException" message="tns:AuthenicationRequiredException">
+    </wsdl:fault>
       <wsdl:fault name="ExpiredException" message="tns:ExpiredException">
     </wsdl:fault>
+      <wsdl:fault name="NotAuthorizedException" message="tns:NotAuthorizedException">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="discoverTopics">
+      <wsdl:input name="discoverTopics" message="tns:discoverTopics">
+    </wsdl:input>
+      <wsdl:output name="discoverTopicsResponse" message="tns:discoverTopicsResponse">
+    </wsdl:output>
+      <wsdl:fault name="NoSuchTopicException" message="tns:NoSuchTopicException">
+    </wsdl:fault>
+      <wsdl:fault name="AuthenicationRequiredException" message="tns:AuthenicationRequiredException">
+    </wsdl:fault>
+      <wsdl:fault name="ExpiredException" message="tns:ExpiredException">
+    </wsdl:fault>
+      <wsdl:fault name="NotAuthorizedException" message="tns:NotAuthorizedException">
+    </wsdl:fault>
+      <wsdl:fault name="ConflictException" message="tns:ConflictException">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="discoverEventsForTopic">
+      <wsdl:input name="discoverEventsForTopic" message="tns:discoverEventsForTopic">
+    </wsdl:input>
+      <wsdl:output name="discoverEventsForTopicResponse" message="tns:discoverEventsForTopicResponse">
+    </wsdl:output>
+      <wsdl:fault name="NoSuchTopicException" message="tns:NoSuchTopicException">
+    </wsdl:fault>
+      <wsdl:fault name="InvalidDataException" message="tns:InvalidDataException">
+    </wsdl:fault>
+      <wsdl:fault name="AuthenicationRequiredException" message="tns:AuthenicationRequiredException">
+    </wsdl:fault>
+      <wsdl:fault name="ExpiredException" message="tns:ExpiredException">
+    </wsdl:fault>
+      <wsdl:fault name="NotAuthorizedException" message="tns:NotAuthorizedException">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getTopicOptions">
+      <wsdl:input name="getTopicOptions" message="tns:getTopicOptions">
+    </wsdl:input>
+      <wsdl:output name="getTopicOptionsResponse" message="tns:getTopicOptionsResponse">
+    </wsdl:output>
       <wsdl:fault name="NoSuchTopicException" message="tns:NoSuchTopicException">
     </wsdl:fault>
       <wsdl:fault name="AuthenicationRequiredException" message="tns:AuthenicationRequiredException">
     </wsdl:fault>
       <wsdl:fault name="NotAuthorizedException" message="tns:NotAuthorizedException">
+    </wsdl:fault>
+      <wsdl:fault name="FeatureNotAvailableException" message="tns:FeatureNotAvailableException">
     </wsdl:fault>
     </wsdl:operation>
     <wsdl:operation name="discoverCapabilities">
@@ -349,58 +379,25 @@
       <wsdl:fault name="NotAuthorizedException" message="tns:NotAuthorizedException">
     </wsdl:fault>
     </wsdl:operation>
-    <wsdl:operation name="discoverEventsForTopic">
-      <wsdl:input name="discoverEventsForTopic" message="tns:discoverEventsForTopic">
-    </wsdl:input>
-      <wsdl:output name="discoverEventsForTopicResponse" message="tns:discoverEventsForTopicResponse">
-    </wsdl:output>
-      <wsdl:fault name="ExpiredException" message="tns:ExpiredException">
-    </wsdl:fault>
-      <wsdl:fault name="NoSuchTopicException" message="tns:NoSuchTopicException">
-    </wsdl:fault>
-      <wsdl:fault name="InvalidDataException" message="tns:InvalidDataException">
-    </wsdl:fault>
-      <wsdl:fault name="AuthenicationRequiredException" message="tns:AuthenicationRequiredException">
-    </wsdl:fault>
-      <wsdl:fault name="NotAuthorizedException" message="tns:NotAuthorizedException">
-    </wsdl:fault>
-    </wsdl:operation>
-    <wsdl:operation name="getTopicOptions">
-      <wsdl:input name="getTopicOptions" message="tns:getTopicOptions">
-    </wsdl:input>
-      <wsdl:output name="getTopicOptionsResponse" message="tns:getTopicOptionsResponse">
-    </wsdl:output>
-      <wsdl:fault name="FeatureNotAvailableException" message="tns:FeatureNotAvailableException">
-    </wsdl:fault>
-      <wsdl:fault name="NoSuchTopicException" message="tns:NoSuchTopicException">
-    </wsdl:fault>
-      <wsdl:fault name="AuthenicationRequiredException" message="tns:AuthenicationRequiredException">
-    </wsdl:fault>
-      <wsdl:fault name="NotAuthorizedException" message="tns:NotAuthorizedException">
-    </wsdl:fault>
-    </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="BrokerServiceServiceSoapBinding" type="tns:broker">
     <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
-    <wsdl:operation name="discoverTopics">
+    <wsdl:operation name="getSubTopics">
       <soap:operation soapAction="" style="document"/>
-      <wsdl:input name="discoverTopics">
+      <wsdl:input name="getSubTopics">
         <soap:body use="literal"/>
       </wsdl:input>
-      <wsdl:output name="discoverTopicsResponse">
+      <wsdl:output name="getSubTopicsResponse">
         <soap:body use="literal"/>
       </wsdl:output>
-      <wsdl:fault name="ExpiredException">
-        <soap:fault name="ExpiredException" use="literal"/>
-      </wsdl:fault>
-      <wsdl:fault name="ConflictException">
-        <soap:fault name="ConflictException" use="literal"/>
-      </wsdl:fault>
       <wsdl:fault name="NoSuchTopicException">
         <soap:fault name="NoSuchTopicException" use="literal"/>
       </wsdl:fault>
       <wsdl:fault name="AuthenicationRequiredException">
         <soap:fault name="AuthenicationRequiredException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="ExpiredException">
+        <soap:fault name="ExpiredException" use="literal"/>
       </wsdl:fault>
       <wsdl:fault name="NotAuthorizedException">
         <soap:fault name="NotAuthorizedException" use="literal"/>
@@ -414,8 +411,8 @@
       <wsdl:output name="requestAccessResponse">
         <soap:body use="literal"/>
       </wsdl:output>
-      <wsdl:fault name="FeatureNotAvailableException">
-        <soap:fault name="FeatureNotAvailableException" use="literal"/>
+      <wsdl:fault name="InvalidDataException">
+        <soap:fault name="InvalidDataException" use="literal"/>
       </wsdl:fault>
       <wsdl:fault name="IncompleteDataException">
         <soap:fault name="IncompleteDataException" use="literal"/>
@@ -423,44 +420,8 @@
       <wsdl:fault name="ConflictException">
         <soap:fault name="ConflictException" use="literal"/>
       </wsdl:fault>
-      <wsdl:fault name="InvalidDataException">
-        <soap:fault name="InvalidDataException" use="literal"/>
-      </wsdl:fault>
-    </wsdl:operation>
-    <wsdl:operation name="getSubTopics">
-      <soap:operation soapAction="" style="document"/>
-      <wsdl:input name="getSubTopics">
-        <soap:body use="literal"/>
-      </wsdl:input>
-      <wsdl:output name="getSubTopicsResponse">
-        <soap:body use="literal"/>
-      </wsdl:output>
-      <wsdl:fault name="ExpiredException">
-        <soap:fault name="ExpiredException" use="literal"/>
-      </wsdl:fault>
-      <wsdl:fault name="NoSuchTopicException">
-        <soap:fault name="NoSuchTopicException" use="literal"/>
-      </wsdl:fault>
-      <wsdl:fault name="AuthenicationRequiredException">
-        <soap:fault name="AuthenicationRequiredException" use="literal"/>
-      </wsdl:fault>
-      <wsdl:fault name="NotAuthorizedException">
-        <soap:fault name="NotAuthorizedException" use="literal"/>
-      </wsdl:fault>
-    </wsdl:operation>
-    <wsdl:operation name="discoverCapabilities">
-      <soap:operation soapAction="" style="document"/>
-      <wsdl:input name="discoverCapabilities">
-        <soap:body use="literal"/>
-      </wsdl:input>
-      <wsdl:output name="discoverCapabilitiesResponse">
-        <soap:body use="literal"/>
-      </wsdl:output>
-      <wsdl:fault name="AuthenicationRequiredException">
-        <soap:fault name="AuthenicationRequiredException" use="literal"/>
-      </wsdl:fault>
-      <wsdl:fault name="NotAuthorizedException">
-        <soap:fault name="NotAuthorizedException" use="literal"/>
+      <wsdl:fault name="FeatureNotAvailableException">
+        <soap:fault name="FeatureNotAvailableException" use="literal"/>
       </wsdl:fault>
     </wsdl:operation>
     <wsdl:operation name="discoverEventsForTopic">
@@ -471,9 +432,6 @@
       <wsdl:output name="discoverEventsForTopicResponse">
         <soap:body use="literal"/>
       </wsdl:output>
-      <wsdl:fault name="ExpiredException">
-        <soap:fault name="ExpiredException" use="literal"/>
-      </wsdl:fault>
       <wsdl:fault name="NoSuchTopicException">
         <soap:fault name="NoSuchTopicException" use="literal"/>
       </wsdl:fault>
@@ -483,8 +441,35 @@
       <wsdl:fault name="AuthenicationRequiredException">
         <soap:fault name="AuthenicationRequiredException" use="literal"/>
       </wsdl:fault>
+      <wsdl:fault name="ExpiredException">
+        <soap:fault name="ExpiredException" use="literal"/>
+      </wsdl:fault>
       <wsdl:fault name="NotAuthorizedException">
         <soap:fault name="NotAuthorizedException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="discoverTopics">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="discoverTopics">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="discoverTopicsResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="NoSuchTopicException">
+        <soap:fault name="NoSuchTopicException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="AuthenicationRequiredException">
+        <soap:fault name="AuthenicationRequiredException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="ExpiredException">
+        <soap:fault name="ExpiredException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="NotAuthorizedException">
+        <soap:fault name="NotAuthorizedException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="ConflictException">
+        <soap:fault name="ConflictException" use="literal"/>
       </wsdl:fault>
     </wsdl:operation>
     <wsdl:operation name="getTopicOptions">
@@ -495,12 +480,27 @@
       <wsdl:output name="getTopicOptionsResponse">
         <soap:body use="literal"/>
       </wsdl:output>
-      <wsdl:fault name="FeatureNotAvailableException">
-        <soap:fault name="FeatureNotAvailableException" use="literal"/>
-      </wsdl:fault>
       <wsdl:fault name="NoSuchTopicException">
         <soap:fault name="NoSuchTopicException" use="literal"/>
       </wsdl:fault>
+      <wsdl:fault name="AuthenicationRequiredException">
+        <soap:fault name="AuthenicationRequiredException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="NotAuthorizedException">
+        <soap:fault name="NotAuthorizedException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="FeatureNotAvailableException">
+        <soap:fault name="FeatureNotAvailableException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="discoverCapabilities">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="discoverCapabilities">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="discoverCapabilitiesResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
       <wsdl:fault name="AuthenicationRequiredException">
         <soap:fault name="AuthenicationRequiredException" use="literal"/>
       </wsdl:fault>

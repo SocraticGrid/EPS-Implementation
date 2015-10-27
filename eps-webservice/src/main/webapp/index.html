@@ -1,0 +1,67 @@
+<html>
+    <head>
+        <title>EPS Welcome</title>
+    </head>
+    <body>
+        <h1>EPS Welcome page</h1>
+        <div>Create a webservice client from the <a href="./services">services exposed in this application</a> and use the following sample messages to interact with it.</div>
+        <div>This sample application comes with 2 predefined transient topcis: </div>
+        <ul><li>/Labs</li><li>/Test</li></ul>
+
+        <div>The services in this application requires web user with the role of <b>epsuser</b> to be defined in the web container where
+        this application is running.</div>
+        
+        <h2>Subscribe to a Topic</h2>
+        <pre>
+        &lt;soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:org="org.socraticgrid.hl7.services.eps"&gt;
+            &lt;soapenv:Header/&gt;
+            &lt;soapenv:Body&gt;
+                &lt;org:subscribe&gt;
+                    &lt;topics&gt;/Labs&lt;/topics&gt;
+                    &lt;type&gt;Pull&lt;/type&gt;         
+                    &lt;options&gt;            
+                        &lt;durability&gt;Transient&lt;/durability&gt;
+                    &lt;/options&gt;
+                &lt;/org:subscribe&gt;
+            &lt;/soapenv:Body&gt;
+        &lt;/soapenv:Envelope&gt;
+        </pre>
+
+        <h2>Publish an Event into a Topic</h2>
+        <pre>
+        &lt;soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:org="org.socraticgrid.hl7.services.eps"&gt;
+            &lt;soapenv:Header/&gt;
+            &lt;soapenv:Body&gt;
+               &lt;org:publishEvent&gt;
+                  &lt;topic&gt;Labs&lt;/topic&gt;         
+                  &lt;event&gt;
+                     &lt;header&gt;               
+                        &lt;messageId&gt;M1&lt;/messageId&gt;               
+                        &lt;subject&gt;Subject 1&lt;/subject&gt;               
+                     &lt;/header&gt;            
+                     &lt;messageBodies&gt;
+                         &lt;type&gt;text/plain&lt;/type&gt;
+                        &lt;body&gt;Body 1&lt;/body&gt;               
+                     &lt;/messageBodies&gt;            
+                     &lt;title&gt;Title 1&lt;/title&gt;            
+                     &lt;topics&gt;Labs&lt;/topics&gt;
+                  &lt;/event&gt;
+               &lt;/org:publishEvent&gt;
+            &lt;/soapenv:Body&gt;
+        &lt;/soapenv:Envelope&gt;
+        </pre>
+
+        <h2>Pull the Events from a Topic</h2>
+        <pre>
+        &lt;soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:org="org.socraticgrid.hl7.services.eps"&gt;
+            &lt;soapenv:Header/&gt;
+            &lt;soapenv:Body&gt;
+                &lt;org:retrieveEvents&gt;         
+                    &lt;topic&gt;/Labs&lt;/topic&gt;
+                &lt;/org:retrieveEvents&gt;
+            &lt;/soapenv:Body&gt;
+        &lt;/soapenv:Envelope&gt;
+        </pre>
+
+    </body>
+</html>

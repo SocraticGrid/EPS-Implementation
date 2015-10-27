@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:beans="http://cxf.apache.org/configuration/beans"
+       xmlns:lang="http://www.springframework.org/schema/lang"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://cxf.apache.org/configuration/beans http://cxf.apache.org/schemas/configuration/cxf-beans.xsd
+		http://www.springframework.org/schema/lang http://www.springframework.org/schema/lang/spring-lang-3.2.xsd
+		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
+	
+    <!--
+    This file overwrides the Users.xml file present in eps-engine-ri.
+    This file is used to specify the users and the privileges they have. 
+    Users from this file can then be registered as topic subscribers in
+    Subscriptions.xml file. 
+    
+    Only subscribed users can poll events from a topic.
+    
+    Defining a user in this file is not enough for the application. The application
+    relies on a HTTP Basic authentication mechanism that requires the users to
+    be registered in the web container were this application is deployed.
+    
+    The name of the web users must correspond to the corresponding userId of 
+    the users defined in this file.
+    
+    It is not required for a web user to be defined in this file, but if we
+    want him to have specific privileges, then it must be defined here.
+    
+    -->
+    
+    <util:list id="privilegesList" value-type="org.socraticgrid.hl7.services.eps.model.Role">
+        <value>Normal</value>
+        <value>Admin</value>
+    </util:list>
+	
+    <bean class="org.socraticgrid.hl7.services.eps.model.User" name="Admin" id="Admin">
+        <property name="name" value="Admin User"/>
+        <property name="userId" value="admin"/>
+        <property name="privileges" ref="privilegesList"/>
+    </bean>
+
+    <bean class="org.socraticgrid.hl7.services.eps.model.User" name="EPSUser" id="EPSUser">
+        <property name="name" value="EPS User"/>
+        <property name="userId" value="eps"/>
+    </bean>
+	
+</beans>

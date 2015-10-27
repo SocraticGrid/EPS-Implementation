@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	
+	
+	<!--  Service Implementation -->
+	<import resource="classpath:beans/BrokerManagementService.xml" />
+	<import resource="classpath:beans/BrokerMonitoringService.xml" />
+	<import resource="classpath:beans/BrokerService.xml" />
+	<import resource="classpath:beans/FederationService.xml" />
+	<import resource="classpath:beans/PSContentBrokeringService.xml" />
+	<import resource="classpath:beans/PSFederationService.xml" />
+	<import resource="classpath:beans/PublicationService.xml" />
+	<import resource="classpath:beans/SubscriptionService.xml" />
+	<import resource="classpath:beans/TopicManagementService.xml" />
+	<import resource="classpath:beans/Configurator.xml" />
+</beans>
